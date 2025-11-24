@@ -49,6 +49,10 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* MouseLookAction;
 
+	/** Interaction Input Action */
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* InteractionAction;
+
 public:
 
 	/** Constructor */
@@ -66,6 +70,7 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
 
 public:
 
@@ -92,5 +97,17 @@ public:
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+
+#pragma region "여기서부터 추가한 클래스들"
+
+public:
+	void Interaction(const FInputActionValue& Value);
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void DoInteraction();
+
+
+#pragma endregion
 };
 

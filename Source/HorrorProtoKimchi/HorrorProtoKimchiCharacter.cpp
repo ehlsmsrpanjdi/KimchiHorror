@@ -65,7 +65,11 @@ void AHorrorProtoKimchiCharacter::SetupPlayerInputComponent(UInputComponent* Pla
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AHorrorProtoKimchiCharacter::Look);
+
+		EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Started, this, &AHorrorProtoKimchiCharacter::Interaction);
 	}
+
+
 	else
 	{
 		UE_LOG(LogHorrorProtoKimchi, Error, TEXT("'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
@@ -130,4 +134,14 @@ void AHorrorProtoKimchiCharacter::DoJumpEnd()
 {
 	// signal the character to stop jumping
 	StopJumping();
+}
+
+void AHorrorProtoKimchiCharacter::Interaction(const FInputActionValue& Value)
+{
+	DoInteraction();
+}
+
+void AHorrorProtoKimchiCharacter::DoInteraction()
+{
+	UE_LOG(LogTemp, Warning, TEXT("임시 로그 테스트!"));
 }

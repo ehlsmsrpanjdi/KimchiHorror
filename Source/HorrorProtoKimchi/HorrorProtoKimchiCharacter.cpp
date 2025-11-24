@@ -195,7 +195,7 @@ void AHorrorProtoKimchiCharacter::OnInteractionEndOverlap(
 		if (OtherActor == CurrentInteractActor)
 		{
 			CurrentInteractActor = nullptr;
-			UE_LOG(LogTemp, Warning, TEXT("Interaction Target Removed"));  // ⭐ 수정
+			UE_LOG(LogTemp, Warning, TEXT("Interaction Target Removed"));  // 수정
 		}
 	}
 }

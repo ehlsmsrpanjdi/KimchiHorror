@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+Ôªø// Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "HorrorProtoKimchiCharacter.h"
 #include "Engine/LocalPlayer.h"
@@ -10,6 +10,8 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Components/BoxComponent.h"
+#include "Interaction/InteractionInterface.h"
 #include "HorrorProtoKimchi.h"
 
 AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
@@ -46,6 +48,18 @@ AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
 
+	InteractionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("InteractionBox"));
+	InteractionBox->SetupAttachment(RootComponent);
+
+	InteractionBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	InteractionBox->SetCollisionObjectType(ECC_WorldDynamic);
+	InteractionBox->SetCollisionResponseToAllChannels(ECR_Ignore);
+	InteractionBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+
+	InteractionBox->SetGenerateOverlapEvents(true);
+
+	//InteractionBox->OnComponentBeginOverlap.AddDynamic(this, &AHorrorProtoKimchiCharacter::OnInteractionBeginOverlap);
+	//InteractionBox->OnComponentEndOverlap.AddDynamic(this, &AHorrorProtoKimchiCharacter::OnInteractionEndOverlap);
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
@@ -143,5 +157,45 @@ void AHorrorProtoKimchiCharacter::Interaction(const FInputActionValue& Value)
 
 void AHorrorProtoKimchiCharacter::DoInteraction()
 {
-	UE_LOG(LogTemp, Warning, TEXT("¿”Ω√ ∑Œ±◊ ≈◊Ω∫∆Æ!"));
+	UE_LOG(LogTemp, Warning, TEXT("Interaction Attempt"));
+
+	if (CurrentInteractActor &&
+		CurrentInteractActor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
+	{
+		IInteractionInterface::Execute_OnInteract(CurrentInteractActor, this);
+	}
+}
+
+void AHorrorProtoKimchiCharacter::OnInteractionBeginOverlap(
+	UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex,
+	bool bFromSweep,
+	const FHitResult& SweepResult)
+{
+	if (OtherActor && OtherActor != this)
+	{
+		if (OtherActor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
+		{
+			CurrentInteractActor = OtherActor;
+			UE_LOG(LogTemp, Warning, TEXT("Interaction Target Found: %s"), *OtherActor->GetName());  // ‚≠ê ÏàòÏ†ï
+		}
+	}
+}
+
+void AHorrorProtoKimchiCharacter::OnInteractionEndOverlap(
+	UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex)
+{
+	if (OtherActor && OtherActor != this)
+	{
+		if (OtherActor == CurrentInteractActor)
+		{
+			CurrentInteractActor = nullptr;
+			UE_LOG(LogTemp, Warning, TEXT("Interaction Target Removed"));  // ‚≠ê ÏàòÏ†ï
+		}
+	}
 }

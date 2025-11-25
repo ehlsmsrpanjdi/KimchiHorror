@@ -52,7 +52,6 @@ Plugins/**/Binaries/*
 
 # Builds
 Build/*
-
 # Whitelist PakBlacklist-<BuildConfiguration>.txt files
 !Build/*/
 Build/*/**
@@ -74,9 +73,6 @@ Plugins/**/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 
-# Unreal 외부 에셋 폴더 제외
-Content/ArtWork/
-Content/ArtWork/**
-
-# 그러나 폴더 자체는 유지하려면 (비어있는 폴더 커밋)
-# !Content/ArtWork/.gitkeep
+# 외부 에셋 폴더 - 폴더 구조는 유지하고 내용물만 무시
+Content/ArtWork/*
+!Content/ArtWork/.gitkeep

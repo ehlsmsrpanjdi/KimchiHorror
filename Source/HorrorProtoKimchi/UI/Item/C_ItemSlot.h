@@ -14,4 +14,8 @@ class HORRORPROTOKIMCHI_API UC_ItemSlot : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
+
+	UFUNCTION(BlueprintCallable)
+	void OnclickSlot();
 };

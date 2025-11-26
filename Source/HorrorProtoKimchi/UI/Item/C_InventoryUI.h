@@ -14,4 +14,17 @@ class HORRORPROTOKIMCHI_API UC_InventoryUI : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
+	void NativeConstruct() override;
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetItemSlotNumber(class UC_ItemSlot* _Slot);
+
+private:
+	UPROPERTY(meta = (BindWidget))
+	class UUniformGridPanel* GridPanel;
+
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory", Meta = (AllowPrivateAccess = "true"))
+	TArray<class UC_ItemSlot*> InventorySlotUIs;
 };

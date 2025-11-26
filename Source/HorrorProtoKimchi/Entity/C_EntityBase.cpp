@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Entity/EntityBase.h"
+#include "Entity/C_EntityBase.h"
 
 // Sets default values
-AEntityBase::AEntityBase()
+AC_EntityBase::AC_EntityBase()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -12,21 +12,21 @@ AEntityBase::AEntityBase()
 }
 
 // Called when the game starts or when spawned
-void AEntityBase::BeginPlay()
+void AC_EntityBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void AEntityBase::Tick(float DeltaTime)
+void AC_EntityBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
 // Called to bind functionality to input
-void AEntityBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AC_EntityBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 

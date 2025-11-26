@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "EntityBase.generated.h"
+#include "C_EntityBase.generated.h"
 
 UCLASS()
-class HORRORPROTOKIMCHI_API AEntityBase : public ACharacter
+class HORRORPROTOKIMCHI_API AC_EntityBase : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	AEntityBase();
+	AC_EntityBase();
 
 protected:
 	// Called when the game starts or when spawned

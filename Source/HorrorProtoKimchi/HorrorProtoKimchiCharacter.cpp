@@ -12,13 +12,14 @@
 #include "InputActionValue.h"
 #include "Components/BoxComponent.h"
 #include "Interaction/InteractionInterface.h"
+#include "Debug/LogHelper.h"
 #include "HorrorProtoKimchi.h"
 
 AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-		
+
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
@@ -68,7 +69,7 @@ void AHorrorProtoKimchiCharacter::SetupPlayerInputComponent(UInputComponent* Pla
 {
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
-		
+
 		// Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
@@ -81,6 +82,9 @@ void AHorrorProtoKimchiCharacter::SetupPlayerInputComponent(UInputComponent* Pla
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AHorrorProtoKimchiCharacter::Look);
 
 		EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Started, this, &AHorrorProtoKimchiCharacter::Interaction);
+
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &AHorrorProtoKimchiCharacter::CrouchFunction);
+
 	}
 
 
@@ -164,6 +168,16 @@ void AHorrorProtoKimchiCharacter::DoInteraction()
 	{
 		IInteractionInterface::Execute_OnInteract(CurrentInteractActor, this);
 	}
+}
+
+void AHorrorProtoKimchiCharacter::CrouchFunction(const FInputActionValue& _Value)
+{
+	DoCrouchFunction();
+}
+
+void AHorrorProtoKimchiCharacter::DoCrouchFunction()
+{
+	LogHelper::PrintOnly(this, TEXT("crouch 눌림"));
 }
 
 void AHorrorProtoKimchiCharacter::OnInteractionBeginOverlap(

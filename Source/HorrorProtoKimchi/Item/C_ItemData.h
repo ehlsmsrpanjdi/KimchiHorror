@@ -9,22 +9,24 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable, BlueprintType, EditInlineNew, DefaultToInstanced)
 class HORRORPROTOKIMCHI_API UC_ItemData : public UObject
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
+
 public:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FString ItemName;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    UTexture2D* ItemIcon;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
     int32 ItemID;
 
-    // 나중에 오버라이드해서 효과 구현
-    UFUNCTION(BlueprintCallable)
-    virtual void UseItem(class AActor* User);
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
+    FString ItemName;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
+    UTexture2D* ItemIcon;
+
+    /** 아이템 사용 */
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Item")
+    void UseItem(AActor* User);
+    virtual void UseItem_Implementation(AActor* User);
 };

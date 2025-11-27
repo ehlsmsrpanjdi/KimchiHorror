@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
+#include "Engine/StaticMesh.h"      
 #include "C_ItemData.generated.h"
 
 /**
@@ -24,6 +25,9 @@ public:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
     UTexture2D* ItemIcon;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
+    UStaticMesh* ItemMesh;
 
     /** 아이템 사용 */
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Item")

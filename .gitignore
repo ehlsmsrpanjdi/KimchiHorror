@@ -52,7 +52,6 @@ Plugins/**/Binaries/*
 
 # Builds
 Build/*
-
 # Whitelist PakBlacklist-<BuildConfiguration>.txt files
 !Build/*/
 Build/*/**
@@ -73,3 +72,7 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# 외부 에셋 폴더 - 폴더 구조는 유지하고 내용물만 무시
+Content/ArtWork/*
+!Content/ArtWork/.gitkeep

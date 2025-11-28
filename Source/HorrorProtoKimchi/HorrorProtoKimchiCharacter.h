@@ -53,6 +53,10 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* InteractionAction;
 
+	/** Interaction Input Action */
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* CrouchAction;
+
 public:
 
 	/** Constructor */
@@ -107,7 +111,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoInteraction();
 
+	void CrouchFunction(const FInputActionValue& _Value);
 
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void DoCrouchFunction();
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	class UBoxComponent* InteractionBox;
@@ -123,7 +130,7 @@ protected:
 		AActor* OtherActor, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex);
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interaction", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction", meta = (AllowPrivateAccess = "true"))
 	AActor* CurrentInteractActor;
 #pragma endregion
 };

@@ -1,4 +1,4 @@
-Ôªø// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -29,11 +29,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
     UStaticMesh* ItemMesh;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
-    FText ItemDescription;
-
-
-    /** ÏïÑÏù¥ÌÖú ÏÇ¨Ïö© */
+    /** æ∆¿Ã≈€ ªÁøÎ */
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Item")
     void UseItem(AActor* User);
     virtual void UseItem_Implementation(AActor* User);

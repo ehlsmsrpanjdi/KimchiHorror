@@ -59,10 +59,9 @@ AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 
 	InteractionBox->SetGenerateOverlapEvents(true);
 
-	//InteractionBox->OnComponentBeginOverlap.AddDynamic(this, &AHorrorProtoKimchiCharacter::OnInteractionBeginOverlap);
-	//InteractionBox->OnComponentEndOverlap.AddDynamic(this, &AHorrorProtoKimchiCharacter::OnInteractionEndOverlap);
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	TargetComponent = CreateDefaultSubobject<UArrowComponent>(TEXT("TargetArrow"));
+	TargetComponent->SetupAttachment(RootComponent);
 }
 
 void AHorrorProtoKimchiCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -178,6 +177,11 @@ void AHorrorProtoKimchiCharacter::CrouchFunction(const FInputActionValue& _Value
 void AHorrorProtoKimchiCharacter::DoCrouchFunction()
 {
 	LogHelper::PrintOnly(this, TEXT("crouch 눌림"));
+}
+
+FVector AHorrorProtoKimchiCharacter::GetTargetPos()
+{
+	return TargetComponent->GetComponentLocation();
 }
 
 void AHorrorProtoKimchiCharacter::OnInteractionBeginOverlap(

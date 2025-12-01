@@ -1,10 +1,11 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+Ôªø// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "Components/ArrowComponent.h"
 #include "HorrorProtoKimchiCharacter.generated.h"
 
 class USpringArmComponent;
@@ -30,6 +31,9 @@ class AHorrorProtoKimchiCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UArrowComponent* TargetComponent;
 	
 protected:
 
@@ -103,7 +107,7 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 
-#pragma region "ø©±‚º≠∫Œ≈Õ √ﬂ∞°«— ≈¨∑°Ω∫µÈ"
+#pragma region "Ïó¨Í∏∞ÏÑúÎ∂ÄÌÑ∞ Ï∂îÍ∞ÄÌïú ÌÅ¥ÎûòÏä§Îì§"
 
 public:
 	void Interaction(const FInputActionValue& Value);
@@ -115,6 +119,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoCrouchFunction();
+
+	UFUNCTION(BlueprintCallable)
+	virtual FVector GetTargetPos();
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	class UBoxComponent* InteractionBox;

@@ -1,10 +1,14 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "C_StateEnum.h"
 #include "C_EntityBase.generated.h"
+
+class UC_StateMachine;
+class UC_StateBase;
 
 UCLASS()
 class HORRORPROTOKIMCHI_API AC_EntityBase : public ACharacter
@@ -18,12 +22,24 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+protected:
+	virtual void StateInit();
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UC_StateMachine* entityStateMachine;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	C_StateEnum currentStateEnum;
+
+public:
+	void ChangeState(C_StateEnum _stateEnum);
+
+	void AddState(C_StateEnum _Enum, UC_StateBase* _BaseState);
 };

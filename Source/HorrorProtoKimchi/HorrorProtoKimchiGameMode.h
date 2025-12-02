@@ -21,7 +21,7 @@ public:
 
 public:
 	UPROPERTY()
-	float currentTime;
+	float currentDelayTime;
 
 
 	UFUNCTION(BlueprintCallable)
@@ -32,6 +32,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 hour;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 currentTime;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 DayCount;

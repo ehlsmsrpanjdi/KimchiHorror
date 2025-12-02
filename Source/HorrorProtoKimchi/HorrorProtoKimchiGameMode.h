@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -18,6 +18,23 @@ public:
 	
 	/** Constructor */
 	AHorrorProtoKimchiGameMode();
+
+public:
+	UPROPERTY()
+	float currentTime;
+
+
+	UFUNCTION(BlueprintCallable)
+	void CalculateTime(float _Delaytime);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 minute;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 hour;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 DayCount;
 };
 
 

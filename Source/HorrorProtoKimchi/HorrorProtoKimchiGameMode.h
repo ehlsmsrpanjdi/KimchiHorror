@@ -20,6 +20,11 @@ public:
 	AHorrorProtoKimchiGameMode();
 
 public:
+	UFUNCTION(BlueprintCallable)
+	int32 GetHour();
+
+
+public:
 	UPROPERTY()
 	float currentDelayTime;
 

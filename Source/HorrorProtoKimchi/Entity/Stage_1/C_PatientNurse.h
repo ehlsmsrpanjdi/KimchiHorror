@@ -35,7 +35,10 @@ public:
 
 
 	UFUNCTION(BlueprintCallable)
-	void Chase(ACharacter* _target, float _Radius, float _Distance, float _waitTime);
+	bool Chase(ACharacter* _target, float _Radius, float _Distance, float _waitTime);
+
+	UFUNCTION(BlueprintCallable)
+	void StopMovement();
 
 	UFUNCTION(BlueprintCallable)
 	float CalculateDistance(ACharacter* _Target);

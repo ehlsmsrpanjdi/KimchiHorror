@@ -30,7 +30,7 @@ void AC_PatientNurse::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 }
 
-void AC_PatientNurse::Chase(ACharacter* _target, float _Radius, float _Distance, float _waitTime)
+bool AC_PatientNurse::Chase(ACharacter* _target, float _Radius, float _Distance, float _waitTime)
 {
 	if (_target && IsValid(_target)) {
 		AIController->MoveToActor(_target, 5.0f, true, true, true, 0, true);
@@ -39,7 +39,14 @@ void AC_PatientNurse::Chase(ACharacter* _target, float _Radius, float _Distance,
 	if (_Distance > CalculateDistance(_target)) {
 		++sequenceIndex;
 		SetWaitTime(_waitTime);
+		StopMovement();
+		return true;
 	}
+	return false;
+}
+
+void AC_PatientNurse::StopMovement() {
+	AIController->StopMovement();
 }
 
 float AC_PatientNurse::CalculateDistance(ACharacter* _Target)

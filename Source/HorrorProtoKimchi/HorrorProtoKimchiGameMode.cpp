@@ -12,59 +12,52 @@ AHorrorProtoKimchiGameMode::AHorrorProtoKimchiGameMode()
 //아침 8시 기준으로 새벽 2시전까지의 시간을 반환함 0~23로 반환
 int32 AHorrorProtoKimchiGameMode::GetHour()
 {
-	if (currentTime >= 5760) {  //새벽 11시
-		return currentTime / 360 - 16;
-	}
-	else {
-		return currentTime / 360 + 8;
-	}
+	return currentTime / 3600;
 }
 
-void AHorrorProtoKimchiGameMode::CalculateTime(float _Delaytime)
+void AHorrorProtoKimchiGameMode::AddHour(int32 time)
 {
-	currentDelayTime += _Delaytime;
+	currentTime += time*3600;
 
-	while (currentTime <= currentDelayTime) {
-		currentDelayTime -= currentTime;
-
-		//한바뀌 다 돌았으면
-		if (minute >= 360) {
-			++currentTime;
-			minute = 1;
-		}
-		else {
-			minute += 1;
-			++currentTime;
-		}
-
-		if (minute % 12 == 0) {
-			hour += 1;
-
-			if (hour % 30 == 0) {
-				SetHour();
-			}
-		}
-
-		if (hour >= 360) {
-			hour = 0;
-		}
-
-		if (currentTime >= 6480) {
-			currentTime = 0;
-			++DayCount;
-		}
-	}
 }
 
-void AHorrorProtoKimchiGameMode::SetHour()
+void AHorrorProtoKimchiGameMode::SubtractHour(int32 time)
 {
-	currentHour = GetHour();
-
-	OnHourChanged.Broadcast(currentHour);
-
-	//OnTimeFunctionOnCharacters(currentHour);
-	//OnTimeFunctionOnActors(currentHour);
+	currentTime -= time * 3600;
 }
+
+void AHorrorProtoKimchiGameMode::SetHour(int32 time)
+{
+	currentTime = time * 60 * 60;
+}
+
+void AHorrorProtoKimchiGameMode::CaculateTime(float deltaTime)
+{
+
+	currentTime += deltaTime * timeScale;
+
+	currentHour = currentTime / 3600;
+
+	if (prevHour != currentHour)
+	{
+		if (currentHour == 24)
+		{
+			currentHour = 0;
+			dayCount += 1;
+			currentTime -= 3600 * 24;
+		}
+
+		OnHourChanged.Broadcast(currentHour);
+		prevHour = currentHour;
+	}
+
+	
+}
+
+
+
+
+
 //
 //void AHorrorProtoKimchiGameMode::AddTimeActor(AC_ActorBase* _timeActor)
 //{

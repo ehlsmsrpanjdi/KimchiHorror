@@ -20,41 +20,42 @@ class AHorrorProtoKimchiGameMode : public AGameModeBase
 	GENERATED_BODY()
 
 public:
-	
+
 	/** Constructor */
 	AHorrorProtoKimchiGameMode();
 
 public:
+	//현재 시간 반환받기
 	UFUNCTION(BlueprintCallable)
 	int32 GetHour();
+	//시간을 인자만큼 증가시키기
+	UFUNCTION(BlueprintCallable)
+	void AddHour(int32 time);
+	//시간을 인자만큼 감소시키기
+	UFUNCTION(BlueprintCallable)
+	void SubtractHour(int32 time);
+	//시간을 인자대로 바꾸기 
+	UFUNCTION(BlueprintCallable)
+	void SetHour(int32 time);
+	//시간계산 프레임 함수 (시간을 흘러가게 하기)
+	UFUNCTION(BlueprintCallable)
+	void CaculateTime(float deltaTime);
 
+	
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FOnHourChanged OnHourChanged;
+
 public:
-	UPROPERTY()
-	float currentDelayTime;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int32 dayCount;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float currentTime;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float timeScale = 1;
 
-
-	UFUNCTION(BlueprintCallable)
-	void CalculateTime(float _Delaytime);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 minute;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 hour;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 currentTime;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+private :
+	int32 prevHour = 0;
 	int32 currentHour;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 DayCount;
-
-	UFUNCTION(BlueprintCallable)
-	void SetHour();
 
 	//UFUNCTION(BlueprintCallable)
 	//void AddTimeActor(class AC_ActorBase* _timeActor);

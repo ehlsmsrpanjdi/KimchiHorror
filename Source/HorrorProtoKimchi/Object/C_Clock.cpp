@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "C_Clock.h"
@@ -8,64 +8,95 @@
 
 AC_Clock::AC_Clock()
 {
-    PrimaryActorTick.bCanEverTick = true;
-    MinuteNiddle = CreateDefaultSubobject<UArrowComponent>(TEXT("MinuteNiddle"));
-    HourNiddle = CreateDefaultSubobject<UArrowComponent>(TEXT("HourNiddle"));
-    MinuteNiddle->SetupAttachment(RootComponent);
-    HourNiddle->SetupAttachment(RootComponent);
+	PrimaryActorTick.bCanEverTick = true;
+
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	SetRootComponent(RootComponent);
+
+	MinuteNiddle = CreateDefaultSubobject<UArrowComponent>(TEXT("MinuteNiddle"));
+	HourNiddle = CreateDefaultSubobject<UArrowComponent>(TEXT("HourNiddle"));
+	MinuteNiddle->SetupAttachment(RootComponent);
+	HourNiddle->SetupAttachment(RootComponent);
 }
 
 void AC_Clock::BeginPlay()
 {
-    Super::BeginPlay();
+	Super::BeginPlay();
 
-    // °ÔÀÓ¸ðµå °¡Á®¿À±â
-    if (AGameModeBase* GM = UGameplayStatics::GetGameMode(this))
-    {
-        gameMode = Cast<AHorrorProtoKimchiGameMode>(GM);
-    }
+	// ê²Œìž„ëª¨ë“œ ê°€ì ¸ì˜¤ê¸°
+	if (AGameModeBase* GM = UGameplayStatics::GetGameMode(this))
+	{
+		gameMode = Cast<AHorrorProtoKimchiGameMode>(GM);
+	}
 
-    if (!gameMode)
-    {
-        UE_LOG(LogTemp, Warning, TEXT("AC_Clock: GameMode cast failed!"));
-    }
+	if (!gameMode)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AC_Clock: GameMode cast failed!"));
+	}
 }
 
 void AC_Clock::Tick(float DeltaTime)
 {
-    Super::Tick(DeltaTime);
+	Super::Tick(DeltaTime);
 
-    if (!gameMode)
-        return;
+	if (!gameMode)
+		return;
 
-    // GameMode ¾È¿¡ float CurrentTime; ÀÖ´Ù°í °¡Á¤
-    const float CurrentTime = gameMode->currentTime;
+	const float CurrentTime = gameMode->currentTime;
 
-    // ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-    //   ½ÃÄ§ (CurrentTime / 3600)
-    // ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	int32 CurrentMinute = (int32)(CurrentTime / 60) % 60;
 
-    {
-        const float HourValue = CurrentTime / 3600.0f;
-        const FRotator HourRot(0.f, -HourValue, 0.f);
+	// 1ë¶„ = 6ë„ (360ë„ / 60ë¶„)
+	float MinuteAngle = CurrentMinute * 6.0f;
 
-        if (HourNiddle)
-        {
-            HourNiddle->SetRelativeRotation(HourRot);
-        }
-    }
 
-    // ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-    //   ºÐÄ§ (CurrentTime / 60)
-    // ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	int32 CurrentHour = (int32)(CurrentTime / 3600) % 12; // 12ì‹œê°„ ê¸°ì¤€
 
-    {
-        const float MinuteValue = CurrentTime / 60.0f;
-        const FRotator MinuteRot(0.f, -MinuteValue, 0.f);
+	// 1ì‹œê°„ = 30ë„ (360ë„ / 12ì‹œê°„)
+	float HourAngle = CurrentHour * 30.0f;
 
-        if (MinuteNiddle)
-        {
-            MinuteNiddle->SetRelativeRotation(MinuteRot);
-        }
-    }
+	// ë¶„ì— ë”°ë¥¸ ì¶”ê°€ íšŒì „ (ì‹œì¹¨ì€ ë¶„ì— ë”°ë¼ ì¡°ê¸ˆì”© ì›€ì§ìž„)
+	HourAngle += CurrentMinute * 0.5f; // 1ë¶„ = 0.5ë„
+
+
+	if (nullptr != MinuteNiddle) {
+		MinuteNiddle->SetRelativeRotation(FRotator(-MinuteAngle, 0, 0));
+	}
+
+	if (nullptr != HourNiddle) {
+		HourNiddle->SetRelativeRotation(FRotator(-HourAngle, 0, 0));
+	}
+
+
+
+
+	//// GameMode ì•ˆì— float CurrentTime; ìžˆë‹¤ê³  ê°€ì •
+	//const float CurrentTime = gameMode->currentTime;
+
+	//// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	////   ì‹œì¹¨ (CurrentTime / 3600)
+	//// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+	//	const float HourValue = CurrentTime / 3600.f;
+	//	const FRotator HourRot(0.f, -HourValue * 30.f, 0.f);
+
+	//	if (HourNiddle)
+	//	{
+	//		HourNiddle->SetRelativeRotation(HourRot);
+	//	}
+
+	//// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	////   ë¶„ì¹¨ (CurrentTime / 60)
+	//// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+
+	//	const float currentMinute = CurrentTime % 3600;
+
+	//	const float MinuteValue = CurrentTime / 60.0f;
+	//	const FRotator MinuteRot(0.f, -MinuteValue, 0.f);
+
+	//	if (MinuteNiddle)
+	//	{
+	//		MinuteNiddle->SetRelativeRotation(MinuteRot);
+	//	}
 }

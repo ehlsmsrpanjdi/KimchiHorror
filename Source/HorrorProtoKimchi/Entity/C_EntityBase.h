@@ -42,4 +42,16 @@ public:
 	void ChangeState(C_StateEnum _stateEnum);
 
 	void AddState(C_StateEnum _Enum, UC_StateBase* _BaseState);
+
+public:
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void InvokeTimeEvent(int32 _TimeValue);
+	virtual void InvokeTimeEvent_Implementation(int32 _TimeValue);
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetActiveFalse();
+
+	UFUNCTION(BlueprintCallable)
+	void SetActiveTrue();
 };

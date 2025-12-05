@@ -3,6 +3,7 @@
 
 #include "Entity/C_EntityBase.h"
 #include "Entity/C_StateMachine.h"
+#include "HorrorProtoKimchiGameMode.h"
 
 // Sets default values
 AC_EntityBase::AC_EntityBase()
@@ -18,6 +19,11 @@ void AC_EntityBase::BeginPlay()
 	Super::BeginPlay();
 	entityStateMachine = NewObject<UC_StateMachine>(this);
 	entityStateMachine->SetOwner(this);
+
+	AGameModeBase* gamemodeBase = GetWorld()->GetAuthGameMode();
+	AHorrorProtoKimchiGameMode* CastGameMode = Cast<AHorrorProtoKimchiGameMode>(gamemodeBase);
+
+	CastGameMode->AddTimeCharacter(this);
 
 	StateInit();
 }
@@ -54,5 +60,23 @@ void AC_EntityBase::ChangeState(C_StateEnum _stateEnum)
 void AC_EntityBase::AddState(C_StateEnum _Enum, UC_StateBase* _BaseState)
 {
 	entityStateMachine->AddState(_Enum, _BaseState);
+}
+
+void AC_EntityBase::InvokeTimeEvent_Implementation(int32 _TimeValue)
+{
+}
+
+void AC_EntityBase::SetActiveFalse()
+{
+	SetActorHiddenInGame(true);
+	SetActorEnableCollision(false);
+	SetActorTickEnabled(false);
+}
+
+void AC_EntityBase::SetActiveTrue()
+{
+	SetActorHiddenInGame(false);
+	SetActorEnableCollision(true);
+	SetActorTickEnabled(true);
 }
 

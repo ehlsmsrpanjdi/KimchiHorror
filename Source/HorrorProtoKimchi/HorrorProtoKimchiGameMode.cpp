@@ -22,10 +22,10 @@ int32 AHorrorProtoKimchiGameMode::GetHour()
 
 void AHorrorProtoKimchiGameMode::CalculateTime(float _Delaytime)
 {
-	currentDelayTime += GetWorld()->DeltaTimeSeconds;
+	currentDelayTime += _Delaytime;
 
-	while (currentTime >= _Delaytime) {
-		currentDelayTime -= _Delaytime;
+	while (currentTime <= currentDelayTime) {
+		currentDelayTime -= currentTime;
 
 		//한바뀌 다 돌았으면
 		if (minute >= 360) {

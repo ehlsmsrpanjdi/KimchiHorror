@@ -1,6 +1,8 @@
 ﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "HorrorProtoKimchiGameMode.h"
+#include "Entity/C_EntityBase.h"
+#include "entity/C_ActorBase.h"
 
 AHorrorProtoKimchiGameMode::AHorrorProtoKimchiGameMode()
 {
@@ -22,7 +24,7 @@ void AHorrorProtoKimchiGameMode::CalculateTime(float _Delaytime)
 {
 	currentDelayTime += GetWorld()->DeltaTimeSeconds;
 
-	while(currentTime >= _Delaytime){
+	while (currentTime >= _Delaytime) {
 		currentDelayTime -= _Delaytime;
 
 		//한바뀌 다 돌았으면
@@ -37,6 +39,10 @@ void AHorrorProtoKimchiGameMode::CalculateTime(float _Delaytime)
 
 		if (minute % 12 == 0) {
 			hour += 1;
+
+			if (hour % 30 == 0) {
+				SetHour();
+			}
 		}
 
 		if (hour >= 360) {
@@ -49,3 +55,35 @@ void AHorrorProtoKimchiGameMode::CalculateTime(float _Delaytime)
 		}
 	}
 }
+
+void AHorrorProtoKimchiGameMode::SetHour()
+{
+	currentHour = GetHour();
+	OnTimeFunctionOnCharacters(currentHour);
+	OnTimeFunctionOnActors(currentHour);
+}
+
+void AHorrorProtoKimchiGameMode::AddTimeActor(AC_ActorBase* _timeActor)
+{
+	TimeActors.Add(_timeActor);
+}
+
+void AHorrorProtoKimchiGameMode::AddTimeCharacter(AC_EntityBase* _timeActor)
+{
+	TimeCharacters.Add(_timeActor);
+}
+
+void AHorrorProtoKimchiGameMode::OnTimeFunctionOnCharacters(int32 _TimeValue)
+{
+	for (AC_EntityBase* act : TimeCharacters) {
+		act->InvokeTimeEvent_Implementation(_TimeValue);
+	}
+}
+
+void AHorrorProtoKimchiGameMode::OnTimeFunctionOnActors(int32 _TimeValue)
+{
+	for (AC_ActorBase* act : TimeActors) {
+		act->InvokeTimeEvent_Implementation(_TimeValue);
+	}
+}
+

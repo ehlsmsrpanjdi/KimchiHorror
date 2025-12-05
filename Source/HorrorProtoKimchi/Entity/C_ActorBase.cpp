@@ -16,10 +16,10 @@ AC_ActorBase::AC_ActorBase()
 void AC_ActorBase::BeginPlay()
 {
 	Super::BeginPlay();
-	AGameModeBase* gamemodeBase = GetWorld()->GetAuthGameMode();
-	AHorrorProtoKimchiGameMode* CastGameMode = Cast<AHorrorProtoKimchiGameMode>(gamemodeBase);
-
-	CastGameMode->AddTimeActor(this);
+	if (AHorrorProtoKimchiGameMode* GM = Cast<AHorrorProtoKimchiGameMode>(GetWorld()->GetAuthGameMode()))
+	{
+		GM->OnHourChanged.AddDynamic(this, &AC_ActorBase::InvokeTimeEvent);
+	}
 
 }
 
@@ -32,6 +32,26 @@ void AC_ActorBase::Tick(float DeltaTime)
 
 
 void AC_ActorBase::InvokeTimeEvent_Implementation(int32 _TimeValue) {
+	if (_TimeValue == 6) {
 
+	}
 }
 
+void AC_ActorBase::OnHourChange(int32 hour)
+{
+	InvokeTimeEvent(hour);
+}
+
+void AC_ActorBase::SetActiveFalse()
+{
+	SetActorHiddenInGame(true);
+	SetActorEnableCollision(false);
+	SetActorTickEnabled(false);
+}
+
+void AC_ActorBase::SetActiveTrue()
+{
+	SetActorHiddenInGame(false);
+	SetActorEnableCollision(true);
+	SetActorTickEnabled(true);
+}

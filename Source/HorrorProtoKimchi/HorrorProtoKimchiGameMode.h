@@ -6,9 +6,14 @@
 #include "GameFramework/GameModeBase.h"
 #include "HorrorProtoKimchiGameMode.generated.h"
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHourChanged, int32, NewHour);
+
+
 /**
  *  Simple GameMode for a third person game
  */
+
 UCLASS(abstract)
 class AHorrorProtoKimchiGameMode : public AGameModeBase
 {
@@ -23,7 +28,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32 GetHour();
 
-
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FOnHourChanged OnHourChanged;
 public:
 	UPROPERTY()
 	float currentDelayTime;
@@ -50,24 +56,24 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetHour();
 
-	UFUNCTION(BlueprintCallable)
-	void AddTimeActor(class AC_ActorBase* _timeActor);
+	//UFUNCTION(BlueprintCallable)
+	//void AddTimeActor(class AC_ActorBase* _timeActor);
 
-	UFUNCTION(BlueprintCallable)
-	void AddTimeCharacter(class AC_EntityBase* _timeActor);
+	//UFUNCTION(BlueprintCallable)
+	//void AddTimeCharacter(class AC_EntityBase* _timeActor);
 
-	UFUNCTION(BlueprintCallable)
-	void OnTimeFunctionOnCharacters(int32 _TimeValue);
+	//UFUNCTION(BlueprintCallable)
+	//void OnTimeFunctionOnCharacters(int32 _TimeValue);
 
-	UFUNCTION(BlueprintCallable)
-	void OnTimeFunctionOnActors(int32 _TimeValue);
+	//UFUNCTION(BlueprintCallable)
+	//void OnTimeFunctionOnActors(int32 _TimeValue);
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	TArray<class AC_ActorBase*> TimeActors;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	//TArray<class AC_ActorBase*> TimeActors;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	TArray<class AC_EntityBase*> TimeCharacters;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	//TArray<class AC_EntityBase*> TimeCharacters;
 };
 
 

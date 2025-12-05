@@ -48,10 +48,18 @@ public:
 	void InvokeTimeEvent(int32 _TimeValue);
 	virtual void InvokeTimeEvent_Implementation(int32 _TimeValue);
 
+	UFUNCTION(BlueprintCallable)
+	void OnHourChange(int32 hour);
+
 public:
 	UFUNCTION(BlueprintCallable)
 	void SetActiveFalse();
 
 	UFUNCTION(BlueprintCallable)
 	void SetActiveTrue();
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsNpc;
 };

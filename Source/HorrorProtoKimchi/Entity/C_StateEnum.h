@@ -13,6 +13,7 @@ enum class C_StateEnum : uint8
 {
     Idle        UMETA(DisplayName = "Idle"),
     Chase       UMETA(DisplayName = "Chase"),
+    DoubtChase  UMETA(DisplayName = "DoubtChase"),
     Return      UMETA(DisplayName = "Return"),
     Attack      UMETA(DisplayName = "Attack"),
 };

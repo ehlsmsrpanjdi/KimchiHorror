@@ -157,6 +157,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsDoubtMode();
 
+	UPROPERTY()
+	bool alreadyMax = false;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxHp = 100.f;

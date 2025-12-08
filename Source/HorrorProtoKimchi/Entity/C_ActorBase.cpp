@@ -19,8 +19,8 @@ void AC_ActorBase::BeginPlay()
 	if (AHorrorProtoKimchiGameMode* GM = Cast<AHorrorProtoKimchiGameMode>(GetWorld()->GetAuthGameMode()))
 	{
 		GM->OnHourChanged.AddDynamic(this, &AC_ActorBase::InvokeTimeEvent);
+		InvokeTimeEvent(GM->GetHour());
 	}
-
 }
 
 // Called every frame
@@ -32,8 +32,11 @@ void AC_ActorBase::Tick(float DeltaTime)
 
 
 void AC_ActorBase::InvokeTimeEvent_Implementation(int32 _TimeValue) {
-	if (_TimeValue == 6) {
-
+	if (_TimeValue >= 18) {
+		SetActiveTrue();
+	}
+	if (_TimeValue < 18) {
+		SetActiveFalse();
 	}
 }
 
@@ -44,6 +47,9 @@ void AC_ActorBase::OnHourChange(int32 hour)
 
 void AC_ActorBase::SetActiveFalse()
 {
+	if (true == IsHidden()) {
+		return;
+	}
 	SetActorHiddenInGame(true);
 	SetActorEnableCollision(false);
 	SetActorTickEnabled(false);
@@ -51,6 +57,9 @@ void AC_ActorBase::SetActiveFalse()
 
 void AC_ActorBase::SetActiveTrue()
 {
+	if (false == IsHidden()) {
+		return;
+	}
 	SetActorHiddenInGame(false);
 	SetActorEnableCollision(true);
 	SetActorTickEnabled(true);

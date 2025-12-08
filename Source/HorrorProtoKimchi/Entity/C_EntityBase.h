@@ -38,6 +38,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	C_StateEnum currentStateEnum;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class USphereComponent* doorCollision;
+
 public:
 	void ChangeState(C_StateEnum _stateEnum);
 
@@ -64,8 +67,6 @@ public:
 
 	bool IsDoubtMax;
 
-	UFUNCTION(BlueprintCallable)
-	void DoubtChasePlayer();
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsNpc;
@@ -83,4 +84,5 @@ public:
 		int32 OtherBodyIndex,
 		bool bFromSweep,
 		const FHitResult& SweepResult);
+
 };

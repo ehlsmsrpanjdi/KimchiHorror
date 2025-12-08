@@ -229,8 +229,12 @@ void AHorrorProtoKimchiCharacter::OnInteractionEndOverlap(
 
 bool AHorrorProtoKimchiCharacter::AddDoubt(float _Value)
 {
+	if (alreadyMax == true) {
+		return true;
+	}
 	CurrentDoubtGauge += _Value;
 	if (MaxDoubtGauge <= CurrentDoubtGauge) {
+		alreadyMax = true;
 		for (AC_EntityBase* entity : EntityArray) {
 			entity->OnPlayerChaseMode();
 		}

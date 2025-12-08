@@ -32,9 +32,8 @@ public:
 
 
 	UFUNCTION(BlueprintCallable)
-	void SetActiveFalse();
+	virtual void SetActiveFalse();
 
 	UFUNCTION(BlueprintCallable)
-	void SetActiveTrue();
-
+	virtual void SetActiveTrue();
 };

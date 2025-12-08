@@ -235,7 +235,7 @@ bool AHorrorProtoKimchiCharacter::AddDoubt(float _Value)
 			entity->OnPlayerChaseMode();
 		}
 		return true;
-	}d
+	}
 	return false;
 }
 

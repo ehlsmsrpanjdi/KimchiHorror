@@ -4,6 +4,8 @@
 #include "Entity/C_EntityBase.h"
 #include "Entity/C_StateMachine.h"
 #include "HorrorProtoKimchiGameMode.h"
+#include "Components/CapsuleComponent.h"
+#include "Entity/C_DoubtChase.h"
 
 // Sets default values
 AC_EntityBase::AC_EntityBase()
@@ -32,6 +34,10 @@ void AC_EntityBase::BeginPlay()
 void AC_EntityBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (IsNpc == true && IsDoubtMax == true) {
+		DoubtChasePlayer();
+	}
 
 	if (nullptr != entityStateMachine) {
 		entityStateMachine->StateUpdate(DeltaTime);
@@ -112,5 +118,29 @@ void AC_EntityBase::SetActiveTrue()
 	SetActorHiddenInGame(false);
 	SetActorEnableCollision(true);
 	SetActorTickEnabled(true);
+}
+
+void AC_EntityBase::OnPlayerChaseMode()
+{
+	if (true == IsNpc) {
+		IsDoubtMax = true;
+		GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AC_EntityBase::JumpScare);
+		entityStateMachine->AddState(C_StateEnum::DoubtChase, NewObject<UC_DoubtChase>(this));
+		ChangeState(C_StateEnum::DoubtChase);
+	}
+}
+
+void AC_EntityBase::DoubtChasePlayer()
+{
+
+}
+
+void AC_EntityBase::JumpScare_Implementation(UPrimitiveComponent* OverlappedComp,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex,
+	bool bFromSweep,
+	const FHitResult& SweepResult)
+{
 }
 

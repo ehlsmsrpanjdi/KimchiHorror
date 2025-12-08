@@ -14,6 +14,7 @@
 #include "Interaction/InteractionInterface.h"
 #include "Debug/LogHelper.h"
 #include "HorrorProtoKimchi.h"
+#include "Entity/C_EntityBase.h"
 
 AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 {
@@ -58,6 +59,14 @@ AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 	InteractionBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 
 	InteractionBox->SetGenerateOverlapEvents(true);
+
+	DoubtBox = CreateDefaultSubobject<UBoxComponent>(TEXT("DoubtBox"));
+	DoubtBox->SetupAttachment(RootComponent);
+
+	DoubtBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	DoubtBox->SetCollisionObjectType(ECC_WorldDynamic);
+	DoubtBox->SetCollisionResponseToAllChannels(ECR_Ignore);
+	DoubtBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 
 
 	TargetComponent = CreateDefaultSubobject<UArrowComponent>(TEXT("TargetArrow"));
@@ -215,5 +224,53 @@ void AHorrorProtoKimchiCharacter::OnInteractionEndOverlap(
 			CurrentInteractActor = nullptr;
 			UE_LOG(LogTemp, Warning, TEXT("Interaction Target Removed"));  // 수정
 		}
+	}
+}
+
+bool AHorrorProtoKimchiCharacter::AddDoubt(float _Value)
+{
+	CurrentDoubtGauge += _Value;
+	if (MaxDoubtGauge <= CurrentDoubtGauge) {
+		for (AC_EntityBase* entity : EntityArray) {
+			entity->OnPlayerChaseMode();
+		}
+		return true;
+	}d
+	return false;
+}
+
+bool AHorrorProtoKimchiCharacter::IsDoubtMode()
+{
+	return MaxDoubtGauge <= CurrentDoubtGauge;
+}
+
+bool AHorrorProtoKimchiCharacter::PlayerTakeDamage(float _Value)
+{
+	CurrentHp -= _Value;
+	if (CurrentHp <= 0) {
+		return true;
+	}
+	return false;
+}
+
+void AHorrorProtoKimchiCharacter::OnDoubtBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor != nullptr) {
+		AC_EntityBase* entity = Cast<AC_EntityBase>(OtherActor);
+		if (entity == nullptr) {
+			return;
+		}
+		if (IsDoubtMode() == true) {
+			entity->OnPlayerChaseMode();
+		}
+		EntityArray.Add(entity);
+	}
+}
+
+void AHorrorProtoKimchiCharacter::OnDoubtBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor != nullptr) {
+		AC_EntityBase* entity = Cast<AC_EntityBase>(OtherActor);
+		EntityArray.Remove(entity);
 	}
 }

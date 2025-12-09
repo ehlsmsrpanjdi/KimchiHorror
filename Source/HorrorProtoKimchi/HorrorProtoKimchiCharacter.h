@@ -1,15 +1,17 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+Ôªø// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "Components/ArrowComponent.h"
 #include "HorrorProtoKimchiCharacter.generated.h"
 
 class USpringArmComponent;
 class UCameraComponent;
 class UInputAction;
+class AC_EntityBase;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
@@ -24,39 +26,46 @@ class AHorrorProtoKimchiCharacter : public ACharacter
 	GENERATED_BODY()
 
 	/** Camera boom positioning the camera behind the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* CameraBoom;
 
 	/** Follow camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
-	
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UArrowComponent* TargetComponent;
+
 protected:
 
 	/** Jump Input Action */
-	UPROPERTY(EditAnywhere, Category="Input")
+	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* JumpAction;
 
 	/** Move Input Action */
-	UPROPERTY(EditAnywhere, Category="Input")
+	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* MoveAction;
 
 	/** Look Input Action */
-	UPROPERTY(EditAnywhere, Category="Input")
+	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* LookAction;
 
 	/** Mouse Look Input Action */
-	UPROPERTY(EditAnywhere, Category="Input")
+	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* MouseLookAction;
 
 	/** Interaction Input Action */
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputAction* InteractionAction;
 
+	/** Interaction Input Action */
+	UPROPERTY(EditAnywhere, Category = "Input")
+	UInputAction* CrouchAction;
+
 public:
 
 	/** Constructor */
-	AHorrorProtoKimchiCharacter();	
+	AHorrorProtoKimchiCharacter();
 
 protected:
 
@@ -75,19 +84,19 @@ protected:
 public:
 
 	/** Handles move inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoMove(float Right, float Forward);
 
 	/** Handles look inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoLook(float Yaw, float Pitch);
 
 	/** Handles jump pressed inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoJumpStart();
 
 	/** Handles jump pressed inputs from either controls or UI interfaces */
-	UFUNCTION(BlueprintCallable, Category="Input")
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoJumpEnd();
 
 public:
@@ -99,7 +108,7 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 
-#pragma region "ø©±‚º≠∫Œ≈Õ √ﬂ∞°«— ≈¨∑°Ω∫µÈ"
+#pragma region "Ïó¨Í∏∞ÏÑúÎ∂ÄÌÑ∞ Ï∂îÍ∞ÄÌïú ÌÅ¥ÎûòÏä§Îì§"
 
 public:
 	void Interaction(const FInputActionValue& Value);
@@ -107,11 +116,17 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoInteraction();
 
+	void CrouchFunction(const FInputActionValue& _Value);
 
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	virtual void DoCrouchFunction();
+
+	UFUNCTION(BlueprintCallable)
+	virtual FVector GetTargetPos();
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	class UBoxComponent* InteractionBox;
-	
+
 	UFUNCTION(BlueprintCallable)
 	void OnInteractionBeginOverlap(UPrimitiveComponent* OverlappedComponent,
 		AActor* OtherActor, UPrimitiveComponent* OtherComp,
@@ -123,8 +138,51 @@ protected:
 		AActor* OtherActor, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex);
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interaction", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction", meta = (AllowPrivateAccess = "true"))
 	AActor* CurrentInteractActor;
 #pragma endregion
+
+public:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	class UBoxComponent* DoubtBox;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxDoubtGauge = 100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float CurrentDoubtGauge = 0.f;
+
+	UFUNCTION(BlueprintCallable)
+	bool AddDoubt(float _Value);
+	UFUNCTION(BlueprintCallable)
+	bool IsDoubtMode();
+
+	UPROPERTY()
+	bool alreadyMax = false;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxHp = 100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float CurrentHp = 100.f;
+
+	UFUNCTION(BlueprintCallable)
+	bool PlayerTakeDamage(float _Value);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<AC_EntityBase*> EntityArray;
+
+
+	UFUNCTION(BlueprintCallable)
+	void OnDoubtBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor, UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	/** End overlap event */
+	UFUNCTION(BlueprintCallable)
+	void OnDoubtBoxEndOverlap(UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor, UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex);
+
 };
 

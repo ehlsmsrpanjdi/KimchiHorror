@@ -12,13 +12,15 @@
 #include "InputActionValue.h"
 #include "Components/BoxComponent.h"
 #include "Interaction/InteractionInterface.h"
+#include "Debug/LogHelper.h"
 #include "HorrorProtoKimchi.h"
+#include "Entity/C_EntityBase.h"
 
 AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-		
+
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
@@ -58,17 +60,24 @@ AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 
 	InteractionBox->SetGenerateOverlapEvents(true);
 
-	//InteractionBox->OnComponentBeginOverlap.AddDynamic(this, &AHorrorProtoKimchiCharacter::OnInteractionBeginOverlap);
-	//InteractionBox->OnComponentEndOverlap.AddDynamic(this, &AHorrorProtoKimchiCharacter::OnInteractionEndOverlap);
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+	DoubtBox = CreateDefaultSubobject<UBoxComponent>(TEXT("DoubtBox"));
+	DoubtBox->SetupAttachment(RootComponent);
+
+	DoubtBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	DoubtBox->SetCollisionObjectType(ECC_WorldDynamic);
+	DoubtBox->SetCollisionResponseToAllChannels(ECR_Ignore);
+	DoubtBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+
+
+	TargetComponent = CreateDefaultSubobject<UArrowComponent>(TEXT("TargetArrow"));
+	TargetComponent->SetupAttachment(RootComponent);
 }
 
 void AHorrorProtoKimchiCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
-		
+
 		// Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
@@ -81,6 +90,9 @@ void AHorrorProtoKimchiCharacter::SetupPlayerInputComponent(UInputComponent* Pla
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AHorrorProtoKimchiCharacter::Look);
 
 		EnhancedInputComponent->BindAction(InteractionAction, ETriggerEvent::Started, this, &AHorrorProtoKimchiCharacter::Interaction);
+
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &AHorrorProtoKimchiCharacter::CrouchFunction);
+
 	}
 
 
@@ -166,6 +178,21 @@ void AHorrorProtoKimchiCharacter::DoInteraction()
 	}
 }
 
+void AHorrorProtoKimchiCharacter::CrouchFunction(const FInputActionValue& _Value)
+{
+	DoCrouchFunction();
+}
+
+void AHorrorProtoKimchiCharacter::DoCrouchFunction()
+{
+	LogHelper::PrintOnly(this, TEXT("crouch 눌림"));
+}
+
+FVector AHorrorProtoKimchiCharacter::GetTargetPos()
+{
+	return TargetComponent->GetComponentLocation();
+}
+
 void AHorrorProtoKimchiCharacter::OnInteractionBeginOverlap(
 	UPrimitiveComponent* OverlappedComponent,
 	AActor* OtherActor,
@@ -197,5 +224,57 @@ void AHorrorProtoKimchiCharacter::OnInteractionEndOverlap(
 			CurrentInteractActor = nullptr;
 			UE_LOG(LogTemp, Warning, TEXT("Interaction Target Removed"));  // 수정
 		}
+	}
+}
+
+bool AHorrorProtoKimchiCharacter::AddDoubt(float _Value)
+{
+	if (alreadyMax == true) {
+		return true;
+	}
+	CurrentDoubtGauge += _Value;
+	if (MaxDoubtGauge <= CurrentDoubtGauge) {
+		alreadyMax = true;
+		for (AC_EntityBase* entity : EntityArray) {
+			entity->OnPlayerChaseMode();
+		}
+		return true;
+	}
+	return false;
+}
+
+bool AHorrorProtoKimchiCharacter::IsDoubtMode()
+{
+	return MaxDoubtGauge <= CurrentDoubtGauge;
+}
+
+bool AHorrorProtoKimchiCharacter::PlayerTakeDamage(float _Value)
+{
+	CurrentHp -= _Value;
+	if (CurrentHp <= 0) {
+		return true;
+	}
+	return false;
+}
+
+void AHorrorProtoKimchiCharacter::OnDoubtBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor != nullptr) {
+		AC_EntityBase* entity = Cast<AC_EntityBase>(OtherActor);
+		if (entity == nullptr) {
+			return;
+		}
+		if (IsDoubtMode() == true) {
+			entity->OnPlayerChaseMode();
+		}
+		EntityArray.Add(entity);
+	}
+}
+
+void AHorrorProtoKimchiCharacter::OnDoubtBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor != nullptr) {
+		AC_EntityBase* entity = Cast<AC_EntityBase>(OtherActor);
+		EntityArray.Remove(entity);
 	}
 }

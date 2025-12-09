@@ -39,6 +39,8 @@ public:
     UFUNCTION(BlueprintCallable, Category = "UI", meta = (WorldContext = "WorldContextObject"))
     UUserWidget* CreateAndAddUI(const UObject* WorldContextObject, TSubclassOf<UUserWidget> UIClass);
 
+    UClass* GetNativeClass(UClass* InClass);
+
 private:
     UPROPERTY()
     TMap<TSubclassOf<UUserWidget>, UUserWidget*> UIDictionary;

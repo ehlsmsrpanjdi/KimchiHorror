@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -12,12 +12,15 @@ class HORRORPROTOKIMCHI_API LogHelper
 {
 public:
 
-    // È­¸é + ·Î±× µÑ ´Ù
+    //	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blink", meta = (AllowPrivateAccess = "true"))
+
+
+    // í™”ë©´ + ë¡œê·¸ ë‘˜ ë‹¤
     static void Log(UObject* WorldContext, const FString& Msg, float Duration = 2.f, const FLinearColor Color = FLinearColor::Yellow);
 
-    // ·Î±×¸¸ Ãâ·Â
+    // ë¡œê·¸ë§Œ ì¶œë ¥
     static void LogOnly(const FString& Msg);
 
-    // È­¸é¸¸ Ãâ·Â (PrintString µ¿ÀÏ)
+    // í™”ë©´ë§Œ ì¶œë ¥ (PrintString ë™ì¼)
     static void PrintOnly(UObject* WorldContext, const FString& Msg, float Duration = 2.f, const FLinearColor Color = FLinearColor::White);
 };

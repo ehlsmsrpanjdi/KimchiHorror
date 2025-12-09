@@ -1,30 +1,40 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+Ôªø// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
+#include "Engine/StaticMesh.h"      
 #include "C_ItemData.generated.h"
 
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable, BlueprintType, EditInlineNew, DefaultToInstanced)
 class HORRORPROTOKIMCHI_API UC_ItemData : public UObject
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
+
 public:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FString ItemName;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    UTexture2D* ItemIcon;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
     int32 ItemID;
 
-    // ≥™¡ﬂø° ø¿πˆ∂Û¿ÃµÂ«ÿº≠ »ø∞˙ ±∏«ˆ
-    UFUNCTION(BlueprintCallable)
-    virtual void UseItem(class AActor* User);
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
+    FString ItemName;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
+    UTexture2D* ItemIcon;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
+    UStaticMesh* ItemMesh;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
+    FText ItemDescription;
+
+
+    /** ÏïÑÏù¥ÌÖú ÏÇ¨Ïö© */
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Item")
+    void UseItem(AActor* User);
+    virtual void UseItem_Implementation(AActor* User);
 };

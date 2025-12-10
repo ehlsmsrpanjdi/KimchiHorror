@@ -73,6 +73,56 @@ AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 	TargetComponent->SetupAttachment(RootComponent);
 }
 
+void AHorrorProtoKimchiCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	ActorsToIgnore.Add(this);
+}
+
+void AHorrorProtoKimchiCharacter::CheckInteraction()
+{
+	if (!FollowCamera) {
+		return;
+	}
+
+	FVector Start = FollowCamera->GetComponentLocation();
+	FVector End = Start + (FollowCamera->GetForwardVector() * 200);
+
+	FHitResult hitResult;
+
+	bool bHit = UKismetSystemLibrary::LineTraceSingle(GetWorld(),
+		Start,
+		End,
+		UEngineTypes::ConvertToTraceType(ECC_Visibility),
+		false,
+		ActorsToIgnore,
+		EDrawDebugTrace::None,
+		hitResult,
+		true);
+
+	if (bHit != false) {
+		AActor* OtherActor = hitResult.GetActor();
+
+		if (OtherActor != nullptr)
+		{
+			if (OtherActor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
+			{
+				CurrentInteractActor = OtherActor;
+			}
+		}
+	}
+
+	else {
+		CurrentInteractActor = nullptr;
+	}
+}
+
+void AHorrorProtoKimchiCharacter::Tick(float _DeltaTime)
+{
+	Super::Tick(_DeltaTime);
+	CheckInteraction();
+}
+
 void AHorrorProtoKimchiCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
@@ -171,9 +221,7 @@ void AHorrorProtoKimchiCharacter::DoInteraction()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Interaction Attempt"));
 
-	if (CurrentInteractActor &&
-		CurrentInteractActor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
-	{
+	if (CurrentInteractActor != nullptr) {
 		IInteractionInterface::Execute_OnInteract(CurrentInteractActor, this);
 	}
 }
@@ -193,39 +241,6 @@ FVector AHorrorProtoKimchiCharacter::GetTargetPos()
 	return TargetComponent->GetComponentLocation();
 }
 
-void AHorrorProtoKimchiCharacter::OnInteractionBeginOverlap(
-	UPrimitiveComponent* OverlappedComponent,
-	AActor* OtherActor,
-	UPrimitiveComponent* OtherComp,
-	int32 OtherBodyIndex,
-	bool bFromSweep,
-	const FHitResult& SweepResult)
-{
-	if (OtherActor && OtherActor != this)
-	{
-		if (OtherActor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
-		{
-			CurrentInteractActor = OtherActor;
-			UE_LOG(LogTemp, Warning, TEXT("Interaction Target Found: %s"), *OtherActor->GetName());  // ⭐ 수정
-		}
-	}
-}
-
-void AHorrorProtoKimchiCharacter::OnInteractionEndOverlap(
-	UPrimitiveComponent* OverlappedComponent,
-	AActor* OtherActor,
-	UPrimitiveComponent* OtherComp,
-	int32 OtherBodyIndex)
-{
-	if (OtherActor && OtherActor != this)
-	{
-		if (OtherActor == CurrentInteractActor)
-		{
-			CurrentInteractActor = nullptr;
-			UE_LOG(LogTemp, Warning, TEXT("Interaction Target Removed"));  // 수정
-		}
-	}
-}
 
 bool AHorrorProtoKimchiCharacter::AddDoubt(float _Value)
 {

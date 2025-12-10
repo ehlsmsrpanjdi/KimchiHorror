@@ -68,6 +68,15 @@ public:
 	AHorrorProtoKimchiCharacter();
 
 protected:
+	virtual void BeginPlay() override;
+
+	void CheckInteraction();
+	UPROPERTY()
+	TArray<AActor*> ActorsToIgnore;
+public:
+	virtual void Tick(float _DeltaTime) override;
+
+protected:
 
 	/** Initialize input action bindings */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -123,20 +132,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual FVector GetTargetPos();
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	class UBoxComponent* InteractionBox;
-
-	UFUNCTION(BlueprintCallable)
-	void OnInteractionBeginOverlap(UPrimitiveComponent* OverlappedComponent,
-		AActor* OtherActor, UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	/** End overlap event */
-	UFUNCTION(BlueprintCallable)
-	void OnInteractionEndOverlap(UPrimitiveComponent* OverlappedComponent,
-		AActor* OtherActor, UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction", meta = (AllowPrivateAccess = "true"))
 	AActor* CurrentInteractActor;

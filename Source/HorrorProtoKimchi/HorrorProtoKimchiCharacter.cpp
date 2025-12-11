@@ -81,6 +81,8 @@ void AHorrorProtoKimchiCharacter::BeginPlay()
 
 void AHorrorProtoKimchiCharacter::CheckInteraction()
 {
+
+
 	if (!FollowCamera) {
 		return;
 	}
@@ -88,31 +90,46 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 	FVector Start = FollowCamera->GetComponentLocation();
 	FVector End = Start + (FollowCamera->GetForwardVector() * 200);
 
-	FHitResult hitResult;
+	TArray<FHitResult> Hits;
 
-	bool bHit = UKismetSystemLibrary::LineTraceSingle(GetWorld(),
+	bool bHit = UKismetSystemLibrary::SphereTraceMulti(
+		GetWorld(),
 		Start,
 		End,
+		10.f,
 		UEngineTypes::ConvertToTraceType(ECC_Visibility),
 		false,
 		ActorsToIgnore,
-		EDrawDebugTrace::None,
-		hitResult,
-		true);
+		EDrawDebugTrace::ForOneFrame,
+		Hits,
+		true
+	);
 
-	if (bHit != false) {
-		AActor* OtherActor = hitResult.GetActor();
+	if (bHit)
+	{
+		float ClosestDist = FLT_MAX;
+		AActor* BestActor = nullptr;
 
-		if (OtherActor != nullptr)
+		for (const FHitResult& Hit : Hits)
 		{
-			if (OtherActor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
+			AActor* Actor = Hit.GetActor();
+			if (!Actor) continue;
+
+			if (Actor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
 			{
-				CurrentInteractActor = OtherActor;
+				float Dist = Hit.Distance;
+				if (Dist < ClosestDist)
+				{
+					ClosestDist = Dist;
+					BestActor = Actor;
+				}
 			}
 		}
-	}
 
-	else {
+		CurrentInteractActor = BestActor;
+	}
+	else
+	{
 		CurrentInteractActor = nullptr;
 	}
 }

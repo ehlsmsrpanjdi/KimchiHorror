@@ -52,6 +52,47 @@ void UC_DoubtChase::StateUpdate(float _DeltaTime)
 		nullptr, // Filter Class
 		true   // AllowPartialPath
 	);
+
+	FVector playerLocation = TargetActor->GetActorLocation();
+	FVector myLocation = OwnerEntity->GetActorLocation();
+
+	FVector DirVec = playerLocation - myLocation;
+
+	FVector Dir = DirVec.GetSafeNormal();
+	FVector Start = myLocation;
+
+	float Distance = FVector::Distance(playerLocation, myLocation);
+
+	// Multi Trace (여러 객체를 한 번에 검출)
+	{
+		TArray<FHitResult> Hits;
+
+		// ObjectType 설정 (원하는 타입만 잡기)
+		FCollisionObjectQueryParams ObjParams;
+		ObjParams.AddObjectTypesToQuery(ECC_Pawn);
+
+		FCollisionQueryParams Params;
+		Params.AddIgnoredActor(OwnerEntity);
+
+		bool bHit = GetWorld()->LineTraceMultiByObjectType(
+			Hits,
+			Start,
+			Start + Dir * 100,
+			ObjParams,
+			Params
+		);
+
+		if (bHit)
+		{
+			for (auto& Hit : Hits)
+			{
+				DrawDebugLine(GetWorld(), Start, Hit.ImpactPoint, FColor::Red, false, 1.f, 0, 2.f);
+				if (Hit.GetActor() == TargetActor) {
+					OwnerEntity->JumpScare();
+				}
+			}
+		}
+	}
 }
 
 void UC_DoubtChase::StateEnd()

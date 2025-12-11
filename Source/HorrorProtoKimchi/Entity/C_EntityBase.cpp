@@ -116,19 +116,13 @@ void AC_EntityBase::OnPlayerChaseMode()
 	}
 	if (true == IsNpc) {
 		IsDoubtMax = true;
-		GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AC_EntityBase::JumpScare);
 		entityStateMachine->AddState(C_StateEnum::DoubtChase, NewObject<UC_DoubtChase>(this));
 		ChangeState(C_StateEnum::DoubtChase);
 	}
 }
 
 
-void AC_EntityBase::JumpScare_Implementation(UPrimitiveComponent* OverlappedComp,
-	AActor* OtherActor,
-	UPrimitiveComponent* OtherComp,
-	int32 OtherBodyIndex,
-	bool bFromSweep,
-	const FHitResult& SweepResult)
+void AC_EntityBase::JumpScare_Implementation()
 {
 }
 

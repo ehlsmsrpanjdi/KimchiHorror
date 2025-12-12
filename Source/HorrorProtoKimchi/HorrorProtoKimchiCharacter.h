@@ -183,5 +183,9 @@ public:
 		AActor* OtherActor, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex);
 
+	//의심도 연출용 재정의함수
+	UFUNCTION(BlueprintImplementableEvent, Category = "Noise")
+    void SetNoise(int32 Doubt);
+
 };
 

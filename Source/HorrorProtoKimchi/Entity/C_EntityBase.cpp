@@ -6,6 +6,7 @@
 #include "HorrorProtoKimchiGameMode.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
+#include "Doubt/C_DoubtsManager.h"
 #include "Entity/C_DoubtChase.h"
 
 // Sets default values
@@ -33,6 +34,25 @@ void AC_EntityBase::BeginPlay()
 	}
 
 	StateInit();
+	GetWorld()->GetGameInstance()->GetSubsystem<UC_DoubtsManager>()->Entitys.Add(this);
+}
+
+void AC_EntityBase::Destroyed()
+{
+	Super::Destroyed();
+
+	if (UGameInstance* GI = GetWorld()->GetGameInstance())
+	{
+		if (UC_DoubtsManager* DoubtsMgr = GI->GetSubsystem<UC_DoubtsManager>())
+		{
+			TArray<AC_EntityBase*>& Arr = DoubtsMgr->Entitys;
+
+			if (Arr.Contains(this))
+			{
+				Arr.Remove(this);
+			}
+		}
+	}
 }
 
 // Called every frame
@@ -44,6 +64,8 @@ void AC_EntityBase::Tick(float DeltaTime)
 		entityStateMachine->StateUpdate(DeltaTime);
 	}
 }
+
+
 
 // Called to bind functionality to input
 void AC_EntityBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

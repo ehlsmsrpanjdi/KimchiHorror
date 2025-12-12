@@ -14,6 +14,7 @@
 #include "Interaction/InteractionInterface.h"
 #include "Debug/LogHelper.h"
 #include "HorrorProtoKimchi.h"
+#include "Doubt/C_DoubtsManager.h"
 #include "Entity/C_EntityBase.h"
 
 AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
@@ -77,6 +78,7 @@ void AHorrorProtoKimchiCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	ActorsToIgnore.Add(this);
+	
 }
 
 void AHorrorProtoKimchiCharacter::CheckInteraction()

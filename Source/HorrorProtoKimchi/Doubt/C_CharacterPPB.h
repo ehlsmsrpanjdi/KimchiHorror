@@ -16,6 +16,5 @@ class HORRORPROTOKIMCHI_API AC_CharacterPPB : public AHorrorProtoKimchiCharacter
 
 public:
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Doubt")
-	void SetNoise(int32 Doubt);
+
 };

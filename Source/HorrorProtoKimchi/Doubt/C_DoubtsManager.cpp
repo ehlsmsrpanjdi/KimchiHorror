@@ -2,7 +2,20 @@
 
 
 #include "Doubt/C_DoubtsManager.h"
+#include "Kismet/GameplayStatics.h"
+#include "HorrorProtoKimchiCharacter.h"
 
+UC_DoubtsManager* UC_DoubtsManager::GetDoubtsManager(const UObject* WorldContextObject)
+{
+	if (!WorldContextObject)
+		return nullptr;
+
+	UGameInstance* GameInstance = UGameplayStatics::GetGameInstance(WorldContextObject);
+	if (!GameInstance)
+		return nullptr;
+
+	return GameInstance->GetSubsystem<UC_DoubtsManager>();
+}
 
 void UC_DoubtsManager::SetDoubt(int32 doubt)
 {
@@ -10,13 +23,19 @@ void UC_DoubtsManager::SetDoubt(int32 doubt)
 	{
 		if (var)
 		{
-			/*var->SetNoise(doubt);*/
+			var->SetNoise(doubt);
 		}
 	}
-		AC_CharacterPPB* Player = Cast<AC_CharacterPPB>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-		if (Player)
-		{
-			Player->SetNoise(doubt);
-		}
+	UWorld* World = GetWorld();
+	if (!World) return;
 
+	AHorrorProtoKimchiCharacter* Player =
+		Cast<AHorrorProtoKimchiCharacter>(UGameplayStatics::GetPlayerCharacter(World, 0));
+
+	if (Player)
+	{
+		Player->SetNoise(doubt);
+	}
 }
+	
+

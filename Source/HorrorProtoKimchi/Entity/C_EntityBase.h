@@ -7,6 +7,7 @@
 #include "C_StateEnum.h"
 #include "C_EntityBase.generated.h"
 
+
 class UC_StateMachine;
 class UC_StateBase;
 
@@ -22,6 +23,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void Destroyed() override;
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -75,4 +77,9 @@ public:
 	void JumpScare();
 	virtual void JumpScare_Implementation();
 
+	//의심도 연출용 재정의함수
+	UFUNCTION(BlueprintImplementableEvent, Category = "Noise")
+	 void SetNoise(int32 Doubt);
+
+	
 };

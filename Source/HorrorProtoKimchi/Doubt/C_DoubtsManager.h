@@ -6,22 +6,20 @@
 #include "Subsystems/Subsystem.h"
 #include "Entity/C_EntityBase.h"
 #include "Doubt/C_CharacterPPB.h"
-#include "Kismet/GameplayStatics.h"
+#include "Subsystems/GameInstanceSubsystem.h" 
 #include "C_DoubtsManager.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class HORRORPROTOKIMCHI_API UC_DoubtsManager : public USubsystem
+class HORRORPROTOKIMCHI_API UC_DoubtsManager : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 public :
-
+	static UC_DoubtsManager* GetDoubtsManager(const UObject* WorldContextObject);
 	UFUNCTION(BlueprintCallable)
 	void SetDoubt(int32 doubt);
 	
-private:
-
 	TArray<AC_EntityBase*>Entitys;
 };

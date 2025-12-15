@@ -10,8 +10,5 @@ UENUM(BlueprintType)
 enum class C_FacePoseEnum : uint8
 {
     Idle        UMETA(DisplayName = "Idle"),
-    Talk       UMETA(DisplayName = "Talk"),
-    Smile  UMETA(DisplayName = "Smlie"),
-    Anger      UMETA(DisplayName = "Anger"),
-    Strange      UMETA(DisplayName = "Strange"),
+    Talk       UMETA(DisplayName = "Talk")
 };

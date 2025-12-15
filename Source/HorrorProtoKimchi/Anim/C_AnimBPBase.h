@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "C_FacePoseEnum.h"
+#include "C_FaceMoodEnum.h"
 #include "C_AnimBPBase.generated.h"
 
 /**
@@ -20,7 +21,7 @@ public :
 	
 
 	UFUNCTION(BlueprintCallable)
-	void SetFacePose(C_FacePoseEnum pose,float interval);
+	void SetFacePose(C_FacePoseEnum pose, C_FaceMoodEnum mood,float interval);
 	
 	UFUNCTION()
 	int32 RandomIndex(int32 first,int32 last );
@@ -29,7 +30,9 @@ public :
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float ElapsedTime = 0;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	int32 Index = 0;
+	int32 PoseIndex = 0;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 MoodIndex = 0;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 FirstIndex = 0;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)

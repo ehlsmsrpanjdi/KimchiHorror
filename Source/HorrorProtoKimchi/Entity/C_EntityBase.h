@@ -43,6 +43,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class USphereComponent* doorCollision;
 
+
 public:
 	void ChangeState(C_StateEnum _stateEnum);
 

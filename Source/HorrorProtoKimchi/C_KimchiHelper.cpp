@@ -239,3 +239,38 @@ bool UC_KimchiHelper::MoveToLocationAndCheckArrival(
 	AICon->MoveToLocation(TargetLocation, MoveRadius);
 	return false;
 }
+
+bool UC_KimchiHelper::IsNavigationAvailable(const UObject* WorldContextObject, const FVector& Point, FVector& OutNavLocation, float boxSize, bool Debug)
+{
+	UNavigationSystemV1* NavSys = UNavigationSystemV1::GetCurrent(WorldContextObject->GetWorld());
+
+	if (!NavSys)
+	{
+		return false;
+	}
+
+	FNavLocation ResultLocation;
+	FVector QueryExtent(boxSize, boxSize, boxSize);
+
+	// ProjectPointToNavigation의 반환값이 성공/실패를 나타냄
+	bool bHasNavigation = NavSys->ProjectPointToNavigation(
+		Point,
+		ResultLocation,
+		QueryExtent
+	);
+
+	if (Debug == true) {
+		if (bHasNavigation)
+		{
+			// 네비게이션이 있으면 투영된 위치 반환
+			OutNavLocation = ResultLocation.Location;
+			UE_LOG(LogTemp, Log, TEXT("Navigation found at: %s"), *OutNavLocation.ToString());
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("No navigation at point: %s"), *Point.ToString());
+		}
+	}
+
+	return bHasNavigation;
+}

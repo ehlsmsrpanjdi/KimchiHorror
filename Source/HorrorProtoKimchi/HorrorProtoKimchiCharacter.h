@@ -185,7 +185,10 @@ public:
 
 	//의심도 연출용 재정의함수
 	UFUNCTION(BlueprintImplementableEvent, Category = "Noise")
-    void SetNoise(int32 Doubt);
+	void SetNoise(int32 Doubt);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsHide = false;
 
 };
 

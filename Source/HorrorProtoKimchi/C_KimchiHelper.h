@@ -57,5 +57,6 @@ public:
 		bool Log = false
 	);
 
-
+	UFUNCTION(BlueprintCallable, Category = "Kimchi|Navigation")
+	static bool IsNavigationAvailable(const UObject* WorldContextObject, const FVector& Point, FVector& OutNavLocation, float boxSize, bool Debug = false);
 };

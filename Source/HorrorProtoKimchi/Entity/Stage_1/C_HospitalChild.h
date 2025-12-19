@@ -34,4 +34,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float AttackPlayerDistance = 50;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float Speed = 0;
 };

@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 using UnrealBuildTool;
 
@@ -18,7 +18,8 @@ public class HorrorProtoKimchi : ModuleRules
 			"StateTreeModule",
 			"GameplayStateTreeModule",
 			"UMG",
-			"Slate"
+            "NavigationSystem",
+            "Slate"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });

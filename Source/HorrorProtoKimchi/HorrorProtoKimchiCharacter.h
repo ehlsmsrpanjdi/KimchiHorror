@@ -190,5 +190,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsHide = false;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float PlayerYaw;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float PlayerPitch;
 };
 

@@ -31,9 +31,6 @@ public:
 
 protected:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blink", meta = (AllowPrivateAccess = "true"))
-	AActor* SplineActor; // 
-
 	/** 스플라인 경로 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blink", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class USplineComponent> Spline;

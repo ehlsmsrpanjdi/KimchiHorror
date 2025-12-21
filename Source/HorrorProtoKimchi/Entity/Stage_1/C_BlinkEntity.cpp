@@ -46,11 +46,6 @@ void AC_BlinkEntity::BeginPlay()
 		);
 	}
 
-	if (SplineActor)
-	{
-		Spline = SplineActor->FindComponentByClass<USplineComponent>();
-	}
-
 	ChangeState(C_StateEnum::Idle);
 }
 

@@ -36,7 +36,9 @@ void UC_BlinkStateChase::StateUpdate(float _DeltaTime)
 		mainMachine->StateChange(C_StateEnum::Idle);
 		return;
 	}
-
+	if (AIController == nullptr) {
+		return;
+	}
 	// NavMesh 따라 이동
 	AIController->MoveToActor(
 		TargetActor,

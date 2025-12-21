@@ -49,13 +49,6 @@ public:
 
 	void AddState(C_StateEnum _Enum, UC_StateBase* _BaseState);
 
-public:
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-	void InvokeTimeEvent(int32 _TimeValue);
-	virtual void InvokeTimeEvent_Implementation(int32 _TimeValue);
-
-	UFUNCTION(BlueprintCallable)
-	void OnHourChange(int32 hour);
 
 public:
 	UFUNCTION(BlueprintCallable)

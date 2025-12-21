@@ -83,15 +83,12 @@ void AHorrorProtoKimchiCharacter::BeginPlay()
 
 void AHorrorProtoKimchiCharacter::CheckInteraction()
 {
-
-
 	if (!FollowCamera) {
 		return;
 	}
 
 	FVector Start = FollowCamera->GetComponentLocation();
 	FVector End = Start + (FollowCamera->GetForwardVector() * 200);
-
 	TArray<FHitResult> Hits;
 
 	bool bHit = UKismetSystemLibrary::SphereTraceMulti(
@@ -107,11 +104,11 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 		true
 	);
 
+	AActor* NewInteractActor = nullptr;
+
 	if (bHit)
 	{
 		float ClosestDist = FLT_MAX;
-		AActor* BestActor = nullptr;
-
 		for (const FHitResult& Hit : Hits)
 		{
 			AActor* Actor = Hit.GetActor();
@@ -123,17 +120,31 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 				if (Dist < ClosestDist)
 				{
 					ClosestDist = Dist;
-					BestActor = Actor;
+					NewInteractActor = Actor;
 				}
 			}
 		}
+	}
 
-		CurrentInteractActor = BestActor;
-	}
-	else
+	// 상태 변화 감지 및 처리
+	if (NewInteractActor != PreviousInteractActor)
 	{
-		CurrentInteractActor = nullptr;
+		// 이전 액터에게 CanNotInteract 호출
+		if (PreviousInteractActor && PreviousInteractActor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
+		{
+			IInteractionInterface::Execute_CanNotInteract(PreviousInteractActor, this);
+		}
+
+		// 새 액터에게 CanInteract 호출
+		if (NewInteractActor)
+		{
+			IInteractionInterface::Execute_CanInteract(NewInteractActor, this);
+		}
+
+		PreviousInteractActor = NewInteractActor;
 	}
+
+	CurrentInteractActor = NewInteractActor;
 }
 
 void AHorrorProtoKimchiCharacter::Tick(float _DeltaTime)

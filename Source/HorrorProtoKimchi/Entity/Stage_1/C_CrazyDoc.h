@@ -74,7 +74,7 @@ public:
 	TArray<AActor*> Items;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	AActor* selectedObj;	
+	AActor* selectedObj;
 
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	//bool mesBool;
@@ -85,7 +85,7 @@ public:
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	//bool scissorsBool;
 private:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class ACharacter* TargetPlayer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

@@ -41,6 +41,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsChecking = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool TempStop = false;
+
 	UFUNCTION(BlueprintCallable)
 	void StopRedLightGame();
 

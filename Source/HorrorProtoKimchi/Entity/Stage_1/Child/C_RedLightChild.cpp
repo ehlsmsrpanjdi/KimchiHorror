@@ -31,6 +31,10 @@ void AC_RedLightChild::OnSoundFinished()
 	Player->PlayerPitch = 0;
 	SetDirectionToBack();
 
+	if (TempStop == true) {
+		return;
+	}
+
 	GetWorldTimerManager().SetTimer(SoundFinishedTimer, this, &AC_RedLightChild::PlayRedLight, 4.f, false);
 }
 
@@ -43,6 +47,8 @@ void AC_RedLightChild::PlayRedLight()
 	if (!AudioComponent) {
 		return;
 	}
+
+	IsChecking = false;
 
 	SetDirectionToForward();
 	AudioComponent->SetSound(RedLightSound);

@@ -17,6 +17,9 @@ public:
     UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction")
     void OnInteract(AActor* Interactor);
 
+    UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction")
+    void CanNotInteract(AActor* Interactor);
+
     // 상호작용 가능 여부
     UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction")
     void CanInteract(AActor* Interactor);
@@ -24,4 +27,6 @@ public:
     virtual void CanInteract_Implementation(AActor* Interactor);
 
     virtual void OnInteract_Implementation(AActor* Interactor);
+
+    virtual void CanNotInteract_Implementation(AActor* Interactor);
 };

@@ -213,6 +213,8 @@ void AHorrorProtoKimchiCharacter::DoLook(float Yaw, float Pitch)
 {
 	if (GetController() != nullptr)
 	{
+		this->PlayerYaw = Yaw;
+		this->PlayerPitch = Pitch;
 		// add yaw and pitch input to controller
 		AddControllerYawInput(Yaw);
 		AddControllerPitchInput(Pitch);

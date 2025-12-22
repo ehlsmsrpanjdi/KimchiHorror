@@ -14,6 +14,10 @@ void UC_AnimBPBase::SetFacePose(C_FacePoseEnum pose, C_FaceMoodEnum mood, float 
 		FirstIndex = 1;
 		LastIndex = 5;
 		break;
+
+	case C_FacePoseEnum::MadLaugh :
+		FirstIndex = 6;
+		LastIndex = 6;
 	
 	default:
 		break;
@@ -27,20 +31,15 @@ void UC_AnimBPBase::SetFacePose(C_FacePoseEnum pose, C_FaceMoodEnum mood, float 
 	case C_FaceMoodEnum::Joy:
 		MoodIndex =1 ;
 		break;
-	case C_FaceMoodEnum::Fear:
-		MoodIndex =2;
+
+	case C_FaceMoodEnum::Anger:
+		MoodIndex =2 ;
 		break;
-	case C_FaceMoodEnum::Sorrow:
+	case C_FaceMoodEnum::MadLaugh:
 		MoodIndex = 3;
 		break;
-	case C_FaceMoodEnum::Mad:
-		MoodIndex =4 ;
-		break;
-	case C_FaceMoodEnum::Anger:
-		MoodIndex =5 ;
-		break;
-	case C_FaceMoodEnum::Strange:
-		MoodIndex = 6;
+	case C_FaceMoodEnum:: MadCloseEye:
+		MoodIndex = 4;
 		break;
 	default:
 		break;

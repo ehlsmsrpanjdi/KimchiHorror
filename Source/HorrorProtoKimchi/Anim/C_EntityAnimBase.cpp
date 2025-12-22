@@ -28,6 +28,53 @@ void UC_EntityAnimBase::SetBodyMove(C_EntityMoveEnum pose)
 		Index = 5;
 		break;
 
+	case C_EntityMoveEnum::CatWalk :
+
+		Index =6 ;
+		break;
+
+	case C_EntityMoveEnum::LeftTurn:
+
+		Index = 7;
+		break;
+	case C_EntityMoveEnum::RightTurn:
+
+		Index = 8;
+		break;
+	case C_EntityMoveEnum::WalkLeftTurn:
+
+		Index = 9;
+		break;
+	case C_EntityMoveEnum::WalkRightTurn:
+
+		Index = 10;
+		break;
+	case C_EntityMoveEnum::BackWalk:
+
+		Index = 11;
+		break;
+	case C_EntityMoveEnum::Talk1:
+
+		Index =12 ;
+		break;
+	case C_EntityMoveEnum::Talk2:
+
+		Index = 13;
+		break;
+	case C_EntityMoveEnum::Talk3:
+
+		Index = 14;
+		break;
+	case C_EntityMoveEnum::Yelling:
+
+		Index = 15;
+		break;
+	case C_EntityMoveEnum::NinjaRun:
+
+		Index = 16;
+		break;
+			
+
 	default :
 		Index = 0;
 		break;

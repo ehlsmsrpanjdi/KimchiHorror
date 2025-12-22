@@ -280,6 +280,8 @@ bool AHorrorProtoKimchiCharacter::AddDoubt(float _Value)
 		return true;
 	}
 	CurrentDoubtGauge += _Value;
+	UC_DoubtsManager* manager = UC_DoubtsManager::GetDoubtsManager(this);
+	manager->SetDoubt(CurrentDoubtGauge);
 	if (MaxDoubtGauge <= CurrentDoubtGauge) {
 		alreadyMax = true;
 		for (AC_EntityBase* entity : EntityArray) {

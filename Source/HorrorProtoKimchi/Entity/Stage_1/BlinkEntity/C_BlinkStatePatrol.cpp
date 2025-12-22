@@ -38,6 +38,7 @@ void UC_BlinkStatePatrol::StateUpdate(float _DeltaTime)
 
 	// Spline 컴포넌트 가져오기
 	if (nullptr == Spline) {
+		Spline = OwnerEntity->GetSpline();
 		return;
 	}
 

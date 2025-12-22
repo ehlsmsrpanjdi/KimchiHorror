@@ -28,10 +28,6 @@ void AC_EntityBase::BeginPlay()
 	entityStateMachine = NewObject<UC_StateMachine>(this);
 	entityStateMachine->SetOwner(this);
 
-	if (AHorrorProtoKimchiGameMode* GM = Cast<AHorrorProtoKimchiGameMode>(GetWorld()->GetAuthGameMode()))
-	{
-		GM->OnHourChanged.AddDynamic(this, &AC_EntityBase::InvokeTimeEvent);
-	}
 
 	StateInit();
 	GetWorld()->GetGameInstance()->GetSubsystem<UC_DoubtsManager>()->Entitys.Add(this);
@@ -91,31 +87,6 @@ void AC_EntityBase::AddState(C_StateEnum _Enum, UC_StateBase* _BaseState)
 	entityStateMachine->AddState(_Enum, _BaseState);
 }
 
-void AC_EntityBase::InvokeTimeEvent_Implementation(int32 _TimeValue)
-{
-	if (IsNpc) {
-		if (_TimeValue <= 17) {
-			SetActiveTrue();
-		}
-		if (_TimeValue >= 18) {
-			SetActiveFalse();
-		}
-	}
-
-	else {
-		if (_TimeValue <= 17) {
-			SetActiveFalse();
-		}
-		if (_TimeValue >= 18) {
-			SetActiveTrue();
-		}
-	}
-}
-
-void AC_EntityBase::OnHourChange(int32 hour)
-{
-	InvokeTimeEvent(hour);
-}
 
 void AC_EntityBase::SetActiveFalse()
 {

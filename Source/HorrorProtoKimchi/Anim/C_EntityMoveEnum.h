@@ -13,6 +13,8 @@ enum class C_EntityMoveEnum : uint8
 {
 	Idle UMETA(DisplayName = "Idle"),
 	Walk UMETA(DisplayName = "Walk"),
+	LookDown UMETA(DisplayName = "LookDown"),
+	MadStand UMETA(DisplayName = "MadStand"),
 	Run UMETA(DisplayName = "Run"),
 	Dance  UMETA(DisplayName = "Dance")
 };

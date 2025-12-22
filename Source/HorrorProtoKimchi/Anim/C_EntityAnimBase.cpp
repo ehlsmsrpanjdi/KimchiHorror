@@ -15,11 +15,17 @@ void UC_EntityAnimBase::SetBodyMove(C_EntityMoveEnum pose)
 	case C_EntityMoveEnum::Walk :
 		Index = 1;
 		break;
-	case C_EntityMoveEnum::Run:
+	case C_EntityMoveEnum::LookDown:
 		Index = 2;
 		break;
-	case C_EntityMoveEnum::Dance:
+	case C_EntityMoveEnum::MadStand:
 		Index = 3;
+		break;
+	case C_EntityMoveEnum::Run:
+		Index = 4;
+		break;
+	case C_EntityMoveEnum::Dance:
+		Index = 5;
 		break;
 
 	default :

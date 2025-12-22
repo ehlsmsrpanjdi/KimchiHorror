@@ -134,8 +134,7 @@ public:
 	virtual FVector GetTargetPos();
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	class UBoxComponent* InteractionBox;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction", meta = (AllowPrivateAccess = "true"))
 	AActor* CurrentInteractActor;
@@ -145,10 +144,6 @@ protected:
 #pragma endregion
 
 public:
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	class UBoxComponent* DoubtBox;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxDoubtGauge = 100.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -170,21 +165,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool PlayerTakeDamage(float _Value);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<AC_EntityBase*> EntityArray;
-
-
-	UFUNCTION(BlueprintCallable)
-	void OnDoubtBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent,
-		AActor* OtherActor, UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	/** End overlap event */
-	UFUNCTION(BlueprintCallable)
-	void OnDoubtBoxEndOverlap(UPrimitiveComponent* OverlappedComponent,
-		AActor* OtherActor, UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex);
 
 	//의심도 연출용 재정의함수
 	UFUNCTION(BlueprintImplementableEvent, Category = "Noise")

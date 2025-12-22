@@ -51,25 +51,6 @@ AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
 
-	InteractionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("InteractionBox"));
-	InteractionBox->SetupAttachment(RootComponent);
-
-	InteractionBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-	InteractionBox->SetCollisionObjectType(ECC_WorldDynamic);
-	InteractionBox->SetCollisionResponseToAllChannels(ECR_Ignore);
-	InteractionBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
-
-	InteractionBox->SetGenerateOverlapEvents(true);
-
-	DoubtBox = CreateDefaultSubobject<UBoxComponent>(TEXT("DoubtBox"));
-	DoubtBox->SetupAttachment(RootComponent);
-
-	DoubtBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-	DoubtBox->SetCollisionObjectType(ECC_WorldDynamic);
-	DoubtBox->SetCollisionResponseToAllChannels(ECR_Ignore);
-	DoubtBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
-
-
 	TargetComponent = CreateDefaultSubobject<UArrowComponent>(TEXT("TargetArrow"));
 	TargetComponent->SetupAttachment(RootComponent);
 }
@@ -265,7 +246,6 @@ void AHorrorProtoKimchiCharacter::CrouchFunction(const FInputActionValue& _Value
 
 void AHorrorProtoKimchiCharacter::DoCrouchFunction()
 {
-	LogHelper::PrintOnly(this, TEXT("crouch 눌림"));
 }
 
 FVector AHorrorProtoKimchiCharacter::GetTargetPos()
@@ -282,13 +262,7 @@ bool AHorrorProtoKimchiCharacter::AddDoubt(float _Value)
 	CurrentDoubtGauge += _Value;
 	UC_DoubtsManager* manager = UC_DoubtsManager::GetDoubtsManager(this);
 	manager->SetDoubt(CurrentDoubtGauge);
-	if (MaxDoubtGauge <= CurrentDoubtGauge) {
-		alreadyMax = true;
-		for (AC_EntityBase* entity : EntityArray) {
-			entity->OnPlayerChaseMode();
-		}
-		return true;
-	}
+
 	return false;
 }
 
@@ -304,26 +278,4 @@ bool AHorrorProtoKimchiCharacter::PlayerTakeDamage(float _Value)
 		return true;
 	}
 	return false;
-}
-
-void AHorrorProtoKimchiCharacter::OnDoubtBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if (OtherActor != nullptr) {
-		AC_EntityBase* entity = Cast<AC_EntityBase>(OtherActor);
-		if (entity == nullptr) {
-			return;
-		}
-		if (IsDoubtMode() == true) {
-			entity->OnPlayerChaseMode();
-		}
-		EntityArray.Add(entity);
-	}
-}
-
-void AHorrorProtoKimchiCharacter::OnDoubtBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	if (OtherActor != nullptr) {
-		AC_EntityBase* entity = Cast<AC_EntityBase>(OtherActor);
-		EntityArray.Remove(entity);
-	}
 }

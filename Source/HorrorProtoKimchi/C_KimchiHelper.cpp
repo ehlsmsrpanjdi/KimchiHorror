@@ -274,3 +274,32 @@ bool UC_KimchiHelper::IsNavigationAvailable(const UObject* WorldContextObject, c
 
 	return bHasNavigation;
 }
+
+float UC_KimchiHelper::GetSpeedRateByDistance(
+	AActor* OwnerActor,
+	AActor* TargetActor,
+	float MinDistance,      // 이 거리 이하면 최소 속도
+	float MaxDistance,      // 이 거리 이상이면 최대 속도
+	float MinSpeedRate,     // 최소 속도 비율 (예: 0.3 = 30%)
+	float MaxSpeedRate      // 최대 속도 비율 (예: 1.0 = 100%)
+)
+{
+	if (!OwnerActor || !TargetActor)
+	{
+		return MinSpeedRate;
+	}
+
+	FVector OwnerLocation = OwnerActor->GetActorLocation();
+	FVector TargetLocation = TargetActor->GetActorLocation();
+	float Distance = FVector::Distance(OwnerLocation, TargetLocation);
+
+	// 거리를 0~1 사이로 정규화
+	float Alpha = FMath::Clamp(
+		(Distance - MinDistance) / (MaxDistance - MinDistance),
+		0.0f,
+		1.0f
+	);
+
+	// MinSpeedRate ~ MaxSpeedRate 사이로 Lerp
+	return FMath::Lerp(MinSpeedRate, MaxSpeedRate, Alpha);
+}

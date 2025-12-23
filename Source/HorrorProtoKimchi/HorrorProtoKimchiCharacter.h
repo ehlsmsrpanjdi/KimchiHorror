@@ -179,5 +179,15 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float PlayerPitch;
+
+public:  //sound
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UAudioComponent* soundComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<class USoundBase*> walkSoundArray;
+
+	UFUNCTION(BlueprintCallable)
+	void PlayWalkSound();
 };
 

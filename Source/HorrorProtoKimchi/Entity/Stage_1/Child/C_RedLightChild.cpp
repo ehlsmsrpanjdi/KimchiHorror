@@ -13,9 +13,6 @@ AC_RedLightChild::AC_RedLightChild()
 	ForwardDirection = CreateDefaultSubobject<UArrowComponent>("ForwardDirection");
 	ForwardDirection->SetupAttachment(RootComponent);
 
-	BackDirection = CreateDefaultSubobject<UArrowComponent>("BackDirection");
-	BackDirection->SetupAttachment(RootComponent);
-
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>("AudioComponent");
 }
 
@@ -75,7 +72,7 @@ void AC_RedLightChild::SetDirectionToForward()
 
 void AC_RedLightChild::SetDirectionToBack()
 {
-	LookDirection = BackDirection->GetComponentLocation();
+	LookDirection = Player->GetActorLocation() + FVector(0.f,0.f,75.f);
 }
 
 bool AC_RedLightChild::CheckPlayerMove()

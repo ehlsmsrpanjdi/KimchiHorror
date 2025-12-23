@@ -65,7 +65,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UArrowComponent* ForwardDirection;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UArrowComponent* BackDirection;
 };

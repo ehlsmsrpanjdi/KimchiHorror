@@ -16,6 +16,8 @@
 #include "HorrorProtoKimchi.h"
 #include "Doubt/C_DoubtsManager.h"
 #include "Entity/C_EntityBase.h"
+#include "Components/AudioComponent.h"
+#include "Sound/SoundBase.h"
 
 AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 {
@@ -53,13 +55,16 @@ AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 
 	TargetComponent = CreateDefaultSubobject<UArrowComponent>(TEXT("TargetArrow"));
 	TargetComponent->SetupAttachment(RootComponent);
+
+	soundComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("PlayerSoundComponent"));
+	soundComponent->SetupAttachment(RootComponent);
 }
 
 void AHorrorProtoKimchiCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	ActorsToIgnore.Add(this);
-	
+
 }
 
 void AHorrorProtoKimchiCharacter::CheckInteraction()
@@ -170,6 +175,7 @@ void AHorrorProtoKimchiCharacter::Move(const FInputActionValue& Value)
 
 	// route the input
 	DoMove(MovementVector.X, MovementVector.Y);
+	PlayWalkSound();
 }
 
 void AHorrorProtoKimchiCharacter::Look(const FInputActionValue& Value)
@@ -278,4 +284,26 @@ bool AHorrorProtoKimchiCharacter::PlayerTakeDamage(float _Value)
 		return true;
 	}
 	return false;
+}
+
+void AHorrorProtoKimchiCharacter::PlayWalkSound()
+{
+	if (soundComponent == nullptr) {
+		return;
+	}
+	if (soundComponent->IsPlaying() == true) {
+		return;
+	}
+	if (walkSoundArray.Num() == 0) {
+		return;
+	}
+
+	int32 RandomIndex = FMath::RandRange(0, walkSoundArray.Num() - 1);
+
+
+	USoundBase* sound = walkSoundArray[RandomIndex];
+
+	soundComponent->SetSound(sound);
+
+	soundComponent->Play();
 }

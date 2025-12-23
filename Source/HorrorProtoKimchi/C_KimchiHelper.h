@@ -59,4 +59,14 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Kimchi|Navigation")
 	static bool IsNavigationAvailable(const UObject* WorldContextObject, const FVector& Point, FVector& OutNavLocation, float boxSize, bool Debug = false);
+
+	UFUNCTION(BlueprintCallable, Category = "Kimchi|CheckDistance")
+	static float GetSpeedRateByDistance(
+		AActor* OwnerActor,
+		AActor* TargetActor,
+		float MinDistance,      // 이 거리 이하면 최소 속도
+		float MaxDistance,      // 이 거리 이상이면 최대 속도
+		float MinSpeedRate,     // 최소 속도 비율 (예: 0.3 = 30%)
+		float MaxSpeedRate      // 최대 속도 비율 (예: 1.0 = 100%)
+	);
 };

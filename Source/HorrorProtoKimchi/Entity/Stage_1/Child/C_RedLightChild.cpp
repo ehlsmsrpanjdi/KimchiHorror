@@ -52,6 +52,7 @@ void AC_RedLightChild::PlayRedLight()
 
 	SetDirectionToForward();
 	AudioComponent->SetSound(RedLightSound);
+	AudioComponent->OnAudioFinished.Clear();
 	AudioComponent->OnAudioFinished.AddDynamic(this, &AC_RedLightChild::OnSoundFinished);
 	AudioComponent->Play();
 }

@@ -10,8 +10,8 @@ UCLASS()
 class HORRORPROTOKIMCHI_API AC_Crate : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AC_Crate();
 
@@ -19,7 +19,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -30,5 +30,23 @@ public:
 	void SetBoolArray(int32 _index, bool _bool);
 
 	UFUNCTION(BlueprintCallable)
+	int32 GetFalseIndex();
+
+	UFUNCTION(BlueprintCallable)
 	int32 GetTrueIndex();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<AActor*> AmplesArray;
+
+	UFUNCTION(BlueprintCallable)
+	TArray<AActor*> SwapAmplePos();
+
+	UFUNCTION(BlueprintCallable)
+	bool CheckCanSwap();
+
+	UFUNCTION(BlueprintCallable)
+	AActor* GetRandomAmple();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	AC_Crate* OtherCrate;
 };

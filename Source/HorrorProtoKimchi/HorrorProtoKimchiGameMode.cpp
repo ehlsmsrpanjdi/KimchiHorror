@@ -53,33 +53,3 @@ void AHorrorProtoKimchiGameMode::CaculateTime(float deltaTime)
 
 	
 }
-
-
-
-
-
-//
-//void AHorrorProtoKimchiGameMode::AddTimeActor(AC_ActorBase* _timeActor)
-//{
-//	TimeActors.Add(_timeActor);
-//}
-//
-//void AHorrorProtoKimchiGameMode::AddTimeCharacter(AC_EntityBase* _timeActor)
-//{
-//	TimeCharacters.Add(_timeActor);
-//}
-//
-//void AHorrorProtoKimchiGameMode::OnTimeFunctionOnCharacters(int32 _TimeValue)
-//{
-//	for (AC_EntityBase* act : TimeCharacters) {
-//		act->InvokeTimeEvent_Implementation(_TimeValue);
-//	}
-//}
-//
-//void AHorrorProtoKimchiGameMode::OnTimeFunctionOnActors(int32 _TimeValue)
-//{
-//	for (AC_ActorBase* act : TimeActors) {
-//		act->InvokeTimeEvent_Implementation(_TimeValue);
-//	}
-//}
-//

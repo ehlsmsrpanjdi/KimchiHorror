@@ -12,7 +12,7 @@ AC_DocPatient::AC_DocPatient()
 
 	HeartBeatComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("HeartBeatComponent"));
 	HeartBeatComponent->SetupAttachment(RootComponent);
-	
+
 }
 
 bool AC_DocPatient::OnEvent(float _DeltaTime)
@@ -45,6 +45,8 @@ bool AC_DocPatient::OnCurePatient(int32 _AmpleIndex)
 
 	HaveToCure = false;
 	CurrentEventIndex = -1;
+
+	CurrentTime = 0;
 
 	return true;
 }

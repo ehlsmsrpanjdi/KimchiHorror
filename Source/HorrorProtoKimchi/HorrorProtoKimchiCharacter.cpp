@@ -72,17 +72,21 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 	if (!FollowCamera) {
 		return;
 	}
-
 	FVector Start = FollowCamera->GetComponentLocation();
 	FVector End = Start + (FollowCamera->GetForwardVector() * 200);
 	TArray<FHitResult> Hits;
 
-	bool bHit = UKismetSystemLibrary::SphereTraceMulti(
+	// Pawn도 감지하도록 ObjectType 배열 추가
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
+	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_WorldDynamic));
+	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_Pawn)); // Pawn 추가
+
+	bool bHit = UKismetSystemLibrary::SphereTraceMultiForObjects(
 		GetWorld(),
 		Start,
 		End,
 		10.f,
-		UEngineTypes::ConvertToTraceType(ECC_Visibility),
+		ObjectTypes, // ObjectType으로 변경
 		false,
 		ActorsToIgnore,
 		EDrawDebugTrace::ForOneFrame,
@@ -91,7 +95,6 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 	);
 
 	AActor* NewInteractActor = nullptr;
-
 	if (bHit)
 	{
 		float ClosestDist = FLT_MAX;
@@ -99,7 +102,6 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 		{
 			AActor* Actor = Hit.GetActor();
 			if (!Actor) continue;
-
 			if (Actor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
 			{
 				float Dist = Hit.Distance;
@@ -120,16 +122,13 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 		{
 			IInteractionInterface::Execute_CanNotInteract(PreviousInteractActor, this);
 		}
-
 		// 새 액터에게 CanInteract 호출
 		if (NewInteractActor)
 		{
 			IInteractionInterface::Execute_CanInteract(NewInteractActor, this);
 		}
-
 		PreviousInteractActor = NewInteractActor;
 	}
-
 	CurrentInteractActor = NewInteractActor;
 }
 

@@ -11,5 +11,7 @@ enum class C_FacePoseEnum : uint8
 {
     Idle        UMETA(DisplayName = "Idle"),
     Talk       UMETA(DisplayName = "Talk"),
-    MadLaugh  UMETA(DisplayName = "MadLaugh")
+    MadLaugh  UMETA(DisplayName = "MadLaugh"),
+    AngerYelling UMETA(DisplayName = "AngerYelling"),
+    CloseEye UMETA(DisplayName = "CloseEye")
 };

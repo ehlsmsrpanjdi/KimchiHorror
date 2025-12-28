@@ -20,6 +20,11 @@ public:
 	virtual void StateEnd() override;
 
 private:
+	void MoveClock(float _DeltaTime);
+
+	void MoveNotClock(float _DeltaTime);
+
+	
 	/** 현재 스플라인 거리 */
 	float CurrentDistance;
 

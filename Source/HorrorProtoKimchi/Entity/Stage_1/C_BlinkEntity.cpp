@@ -19,13 +19,16 @@ AC_BlinkEntity::AC_BlinkEntity()
 void AC_BlinkEntity::BeginPlay()
 {
 	Super::BeginPlay();
-
-	ChangeState(C_StateEnum::Idle);
 }
 
 void AC_BlinkEntity::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+}
+
+void AC_BlinkEntity::StartMachine()
+{
+	ChangeState(C_StateEnum::Idle);
 }
 
 void AC_BlinkEntity::StateInit()

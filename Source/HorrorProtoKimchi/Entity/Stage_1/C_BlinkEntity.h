@@ -35,7 +35,13 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blink", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class USplineComponent> Spline;
 
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blink", meta = (AllowPrivateAccess = "true"))
+	bool MoveClock = true;
 
 public:
 	FORCEINLINE USplineComponent* GetSpline() const { return Spline; }
+
+	UFUNCTION(BlueprintCallable)
+	void StartMachine();
 };

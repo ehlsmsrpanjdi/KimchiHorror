@@ -69,4 +69,7 @@ public:
 		float MinSpeedRate,     // 최소 속도 비율 (예: 0.3 = 30%)
 		float MaxSpeedRate      // 최대 속도 비율 (예: 1.0 = 100%)
 	);
+
+	UFUNCTION(BlueprintCallable, Category = "Kimchi|Random")
+	static int32 GetRandomInteger(int32 _start, int32 _end);
 };

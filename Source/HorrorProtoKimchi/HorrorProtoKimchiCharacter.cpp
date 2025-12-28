@@ -85,7 +85,7 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 		GetWorld(),
 		Start,
 		End,
-		10.f,
+		5.f,
 		ObjectTypes, // ObjectType으로 변경
 		false,
 		ActorsToIgnore,

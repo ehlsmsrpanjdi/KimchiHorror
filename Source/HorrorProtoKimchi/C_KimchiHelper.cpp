@@ -303,3 +303,8 @@ float UC_KimchiHelper::GetSpeedRateByDistance(
 	// MinSpeedRate ~ MaxSpeedRate 사이로 Lerp
 	return FMath::Lerp(MinSpeedRate, MaxSpeedRate, Alpha);
 }
+
+int32 UC_KimchiHelper::GetRandomInteger(int32 _start, int32 _end)
+{
+	return FMath::RandRange(_start, _end);
+}

@@ -189,5 +189,13 @@ public:  //sound
 
 	UFUNCTION(BlueprintCallable)
 	void PlayWalkSound();
+
+public:
+	//questLine
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Quest")
+	class UC_QuestComponent* QuestComponent;
+
+	UFUNCTION(BlueprintCallable)
+	void NotifyQuestComponent(FName _CurrentQuestLine);
 };
 

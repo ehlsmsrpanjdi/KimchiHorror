@@ -42,5 +42,21 @@ void AC_NumberPad::ClearNumber()
 	}
 
 	NumberArray.Empty();
+
+	CurrentArrayValue.Empty();
+}
+
+bool AC_NumberPad::CheckAnswer()
+{
+	if (CurrentArrayValue.Num() != AnswerValue.Num()) {
+		return false;
+	}
+
+	for (int i = 0; i < CurrentArrayValue.Num(); ++i) {
+		if (CurrentArrayValue[i] != AnswerValue[i]) {
+			return false;
+		}
+	}
+	return true;
 }
 

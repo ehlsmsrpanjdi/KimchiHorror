@@ -18,6 +18,7 @@
 #include "Entity/C_EntityBase.h"
 #include "Components/AudioComponent.h"
 #include "Sound/SoundBase.h"
+#include "C_QuestComponent.h"
 
 AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 {
@@ -65,6 +66,11 @@ void AHorrorProtoKimchiCharacter::BeginPlay()
 	Super::BeginPlay();
 	ActorsToIgnore.Add(this);
 
+	QuestComponent = FindComponentByClass<UC_QuestComponent>();
+
+	if (QuestComponent == nullptr) {
+		LogHelper::PrintOnly(this, "QuestComponentIsNull");
+	}
 }
 
 void AHorrorProtoKimchiCharacter::CheckInteraction()
@@ -247,6 +253,13 @@ void AHorrorProtoKimchiCharacter::DoInteraction()
 	UE_LOG(LogTemp, Warning, TEXT("Interaction Attempt"));
 
 	if (CurrentInteractActor != nullptr) {
+		if (QuestComponent && IInteractionInterface::Execute_IsQuestObject(CurrentInteractActor, this))
+		{
+			FName QuestLine = IInteractionInterface::Execute_GetCurrentQuestLineName(CurrentInteractActor, this);
+
+			NotifyQuestComponent(QuestLine);
+		}
+		// 상호작용 실행
 		IInteractionInterface::Execute_OnInteract(CurrentInteractActor, this);
 	}
 }
@@ -312,4 +325,11 @@ void AHorrorProtoKimchiCharacter::PlayWalkSound()
 	soundComponent->SetSound(sound);
 
 	soundComponent->Play();
+}
+
+void AHorrorProtoKimchiCharacter::NotifyQuestComponent(FName _CurrentQuestLine)
+{
+	if (QuestComponent != nullptr && true == QuestComponent->CheckQuestLine(_CurrentQuestLine)) {
+		QuestComponent->ExecuteQuest(_CurrentQuestLine);
+	}
 }

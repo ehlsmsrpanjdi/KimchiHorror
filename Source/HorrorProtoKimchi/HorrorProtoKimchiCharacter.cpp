@@ -102,6 +102,13 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 		{
 			AActor* Actor = Hit.GetActor();
 			if (!Actor) continue;
+
+			UPrimitiveComponent* HitComp = Hit.GetComponent();
+			if (HitComp && HitComp->ComponentHasTag(FName("NoInteraction")))
+			{
+				continue;
+			}
+
 			if (Actor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
 			{
 				float Dist = Hit.Distance;

@@ -35,4 +35,13 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ClearNumber();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<int32> AnswerValue;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<int32> CurrentArrayValue;
+
+	UFUNCTION(BlueprintCallable)
+	bool CheckAnswer();
 };

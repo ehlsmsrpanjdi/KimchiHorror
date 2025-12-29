@@ -28,7 +28,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
 	USoundBase* RedLightSound;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
 	UAudioComponent* AudioComponent;
 	FTimerHandle SoundFinishedTimer;
 

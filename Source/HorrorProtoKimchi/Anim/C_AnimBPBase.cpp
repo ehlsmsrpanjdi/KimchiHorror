@@ -18,14 +18,15 @@ void UC_AnimBPBase::SetFacePose(C_FacePoseEnum pose, C_FaceMoodEnum mood, float 
 	case C_FacePoseEnum::MadLaugh :
 		FirstIndex = 6;
 		LastIndex = 6;
-	
+		break;
 	case C_FacePoseEnum::AngerYelling :
 		FirstIndex = 7;
 		LastIndex = 7;
-
+		break;
 	case C_FacePoseEnum::CloseEye :
 		FirstIndex = 8;
 		LastIndex = 8;
+		break;
 	default:
 		break;
 	}

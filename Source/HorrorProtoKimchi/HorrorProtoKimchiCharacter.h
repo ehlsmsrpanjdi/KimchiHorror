@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "Components/ArrowComponent.h"
+#include "C_GameInstance.h"
 #include "HorrorProtoKimchiCharacter.generated.h"
 
 class USpringArmComponent;
@@ -197,5 +198,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void NotifyQuestComponent(FName _CurrentQuestLine);
+
+public:
+	UPROPERTY()
+	UC_GameInstance* MyGameInstance;
 };
 

@@ -71,6 +71,12 @@ void AHorrorProtoKimchiCharacter::BeginPlay()
 	if (QuestComponent == nullptr) {
 		LogHelper::PrintOnly(this, "QuestComponentIsNull");
 	}
+
+	if (MyGameInstance == nullptr) {
+		MyGameInstance = Cast<UC_GameInstance>(GetGameInstance());
+	}
+
+	MyGameInstance->PlayerBeginPlay();
 }
 
 void AHorrorProtoKimchiCharacter::CheckInteraction()
@@ -226,8 +232,14 @@ void AHorrorProtoKimchiCharacter::DoLook(float Yaw, float Pitch)
 		this->PlayerYaw = Yaw;
 		this->PlayerPitch = Pitch;
 		// add yaw and pitch input to controller
+		if (MyGameInstance != nullptr) {
+			AddControllerYawInput(Yaw * MyGameInstance->MouseSensetive);
+			AddControllerPitchInput(Pitch * MyGameInstance->MouseSensetive);
+		}
+		else {
 		AddControllerYawInput(Yaw);
 		AddControllerPitchInput(Pitch);
+		}
 	}
 }
 

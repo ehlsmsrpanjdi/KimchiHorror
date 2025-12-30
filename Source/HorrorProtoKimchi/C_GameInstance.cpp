@@ -42,7 +42,7 @@ FC_SoundDataTable UC_GameInstance::GetSoundData(FName _SoundData)
 	}
 }
 
-void UC_GameInstance::SaveGame(const FName& _CurrentLevelName)
+void UC_GameInstance::SaveGame()
 {
 	UC_SaveGame* SaveGameData = Cast<UC_SaveGame>(
 		UGameplayStatics::CreateSaveGameObject(UC_SaveGame::StaticClass())
@@ -52,7 +52,7 @@ void UC_GameInstance::SaveGame(const FName& _CurrentLevelName)
 		return;
 	}
 
-	SaveGameData->CurrentLevelName = _CurrentLevelName;
+	SaveGameData->DayCount = DayCount;
 	UGameplayStatics::SaveGameToSlot(SaveGameData, SlotName, 0);
 }
 
@@ -74,14 +74,14 @@ bool UC_GameInstance::DeleteSaveData()
 
 
 //게임 시작할때 및 load했을때의 레벨
-FName UC_GameInstance::GetSavedLevelName()
+int32 UC_GameInstance::GetSavedDayCount()
 {
 	UC_SaveGame* LoadedData = GetSaveData();
 	if (LoadedData == nullptr) {
-		return FName();
+		return 1;
 	}
 	else {
-		return LoadedData->CurrentLevelName;
+		return LoadedData->DayCount;
 	}
 }
 

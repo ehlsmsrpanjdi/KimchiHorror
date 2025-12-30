@@ -16,5 +16,5 @@ class HORRORPROTOKIMCHI_API UC_SaveGame : public USaveGame
 
 public:
 
-	FName CurrentLevelName;
+	int32 DayCount;
 };

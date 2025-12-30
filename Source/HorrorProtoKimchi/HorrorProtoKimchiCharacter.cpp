@@ -77,6 +77,8 @@ void AHorrorProtoKimchiCharacter::BeginPlay()
 	}
 
 	MyGameInstance->PlayerBeginPlay();
+	MyGameInstance->SetCurrentLevelName();
+	MyGameInstance->SaveGame();
 }
 
 void AHorrorProtoKimchiCharacter::CheckInteraction()

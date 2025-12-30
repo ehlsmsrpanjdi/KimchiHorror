@@ -39,7 +39,7 @@ public:
 public:
 	//SaveData
 	UFUNCTION(BlueprintCallable)
-	void SaveGame(const FName& _CurrentLevelName);
+	void SaveGame();
 
 	UFUNCTION(BlueprintCallable)
 	class UC_SaveGame* GetSaveData();
@@ -48,7 +48,7 @@ public:
 	bool DeleteSaveData();
 
 	UFUNCTION(BlueprintCallable)
-	FName GetSavedLevelName();
+	int32 GetSavedDayCount();
 
 	UFUNCTION(BlueprintCallable)
 	FName GetCurrentLevelName();
@@ -107,6 +107,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 DayCount = 1;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName CurrentQuestName;
 
 	UFUNCTION(BlueprintCallable)
 	void SetCurrentLevelName();

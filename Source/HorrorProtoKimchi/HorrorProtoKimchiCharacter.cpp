@@ -77,6 +77,8 @@ void AHorrorProtoKimchiCharacter::BeginPlay()
 	}
 
 	MyGameInstance->PlayerBeginPlay();
+	MyGameInstance->SetCurrentLevelName();
+	MyGameInstance->SaveGame();
 }
 
 void AHorrorProtoKimchiCharacter::CheckInteraction()
@@ -262,6 +264,7 @@ void AHorrorProtoKimchiCharacter::DoInteraction()
 		{
 			FName QuestLine = IInteractionInterface::Execute_GetCurrentQuestLineName(CurrentInteractActor, this);
 
+			IInteractionInterface::Execute_SetQuestComplete(CurrentInteractActor, this);
 			NotifyQuestComponent(QuestLine);
 		}
 		// 상호작용 실행

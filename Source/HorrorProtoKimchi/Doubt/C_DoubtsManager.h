@@ -20,6 +20,8 @@ public :
 	static UC_DoubtsManager* GetDoubtsManager(const UObject* WorldContextObject);
 	UFUNCTION(BlueprintCallable)
 	void SetDoubt(int32 doubt);
+	UFUNCTION(BlueprintCallable)
+	void EmptyArrayfuckyou();
 	
 	TArray<AC_EntityBase*>Entitys;
 };

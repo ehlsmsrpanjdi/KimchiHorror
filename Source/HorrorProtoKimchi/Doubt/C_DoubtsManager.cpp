@@ -19,8 +19,14 @@ UC_DoubtsManager* UC_DoubtsManager::GetDoubtsManager(const UObject* WorldContext
 
 void UC_DoubtsManager::SetDoubt(int32 doubt)
 {
+	
+
 	for (AC_EntityBase* var : Entitys)
 	{
+		if (!IsValid(var))
+		{
+			continue;
+		}
 		if (var)
 		{
 			var->SetNoise(doubt);
@@ -36,6 +42,11 @@ void UC_DoubtsManager::SetDoubt(int32 doubt)
 	{
 		Player->SetNoise(doubt);
 	}
+}
+
+void UC_DoubtsManager::EmptyArrayfuckyou()
+{
+	Entitys.Empty();
 }
 	
 

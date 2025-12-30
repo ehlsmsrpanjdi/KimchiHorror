@@ -72,7 +72,6 @@ protected:
 	virtual void BeginPlay() override;
 
 	void CheckInteraction();
-	UPROPERTY()
 	TArray<AActor*> ActorsToIgnore;
 public:
 	virtual void Tick(float _DeltaTime) override;
@@ -202,5 +201,11 @@ public:
 public:
 	UPROPERTY()
 	UC_GameInstance* MyGameInstance;
+
+
+	float InteractionTime = 0.3f;
+	float currentInteractionTime = 0.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
+	TEnumAsByte<ECollisionChannel> InteractionChannel;
 };
 

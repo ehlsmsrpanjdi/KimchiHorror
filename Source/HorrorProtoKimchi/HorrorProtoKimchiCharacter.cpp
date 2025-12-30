@@ -84,51 +84,40 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 	if (!FollowCamera) {
 		return;
 	}
+
 	FVector Start = FollowCamera->GetComponentLocation();
 	FVector End = Start + (FollowCamera->GetForwardVector() * 200);
-	TArray<FHitResult> Hits;
+	FHitResult Hit;
 
-	// Pawn도 감지하도록 ObjectType 배열 추가
-	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
-	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_WorldDynamic));
-	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_Pawn)); // Pawn 추가
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActors(ActorsToIgnore);
+	QueryParams.bTraceComplex = false;
 
-	bool bHit = UKismetSystemLibrary::SphereTraceMultiForObjects(
-		GetWorld(),
+	bool bHit = GetWorld()->SweepSingleByChannel(
+		Hit,
 		Start,
 		End,
-		5.f,
-		ObjectTypes, // ObjectType으로 변경
-		false,
-		ActorsToIgnore,
-		EDrawDebugTrace::ForOneFrame,
-		Hits,
-		true
+		FQuat::Identity,
+		InteractionChannel,
+		FCollisionShape::MakeSphere(5.f),
+		QueryParams
 	);
 
 	AActor* NewInteractActor = nullptr;
+
 	if (bHit)
 	{
-		float ClosestDist = FLT_MAX;
-		for (const FHitResult& Hit : Hits)
+		AActor* Actor = Hit.GetActor();
+		if (Actor)
 		{
-			AActor* Actor = Hit.GetActor();
-			if (!Actor) continue;
-
 			UPrimitiveComponent* HitComp = Hit.GetComponent();
 			if (HitComp && HitComp->ComponentHasTag(FName("NoInteraction")))
 			{
-				continue;
+				// NoInteraction 태그 있으면 무시
 			}
-
-			if (Actor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
+			else if (Actor->GetClass()->ImplementsInterface(UInteractionInterface::StaticClass()))
 			{
-				float Dist = Hit.Distance;
-				if (Dist < ClosestDist)
-				{
-					ClosestDist = Dist;
-					NewInteractActor = Actor;
-				}
+				NewInteractActor = Actor;
 			}
 		}
 	}
@@ -154,7 +143,11 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 void AHorrorProtoKimchiCharacter::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
-	CheckInteraction();
+	currentInteractionTime += _DeltaTime;
+	if (currentInteractionTime > InteractionTime) {
+		CheckInteraction();
+		currentInteractionTime -= InteractionTime;
+	}
 }
 
 void AHorrorProtoKimchiCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -237,8 +230,8 @@ void AHorrorProtoKimchiCharacter::DoLook(float Yaw, float Pitch)
 			AddControllerPitchInput(Pitch * MyGameInstance->MouseSensetive);
 		}
 		else {
-		AddControllerYawInput(Yaw);
-		AddControllerPitchInput(Pitch);
+			AddControllerYawInput(Yaw);
+			AddControllerPitchInput(Pitch);
 		}
 	}
 }

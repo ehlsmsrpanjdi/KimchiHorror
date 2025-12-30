@@ -107,6 +107,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 DayCount = 1;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName CurrentQuestName;
 
 	UFUNCTION(BlueprintCallable)
 	void SetCurrentLevelName();

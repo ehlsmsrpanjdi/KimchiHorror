@@ -30,6 +30,9 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction")
 	FName GetCurrentQuestLineName(AActor* Interactor);
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction")
+	void SetQuestComplete(AActor* Interactor);
+
 	virtual void CanInteract_Implementation(AActor* Interactor);
 
 	virtual void OnInteract_Implementation(AActor* Interactor);
@@ -39,4 +42,6 @@ public:
 	virtual bool IsQuestObject_Implementation(AActor* Interactor);
 
 	virtual FName GetCurrentQuestLineName_Implementation(AActor* Interactor);
+
+	virtual void SetQuestComplete_Implementation(AActor* Interactor);
 };

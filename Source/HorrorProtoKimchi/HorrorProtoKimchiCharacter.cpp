@@ -263,8 +263,9 @@ void AHorrorProtoKimchiCharacter::DoInteraction()
 		if (QuestComponent && IInteractionInterface::Execute_IsQuestObject(CurrentInteractActor, this))
 		{
 			FName QuestLine = IInteractionInterface::Execute_GetCurrentQuestLineName(CurrentInteractActor, this);
-
-			IInteractionInterface::Execute_SetQuestComplete(CurrentInteractActor, this);
+			if (QuestLine == QuestComponent->CurrentQuestLine) {
+				IInteractionInterface::Execute_SetQuestComplete(CurrentInteractActor, this);
+			}
 			NotifyQuestComponent(QuestLine);
 		}
 		// 상호작용 실행

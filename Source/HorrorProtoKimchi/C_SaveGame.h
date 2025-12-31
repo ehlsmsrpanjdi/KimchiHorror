@@ -15,6 +15,6 @@ class HORRORPROTOKIMCHI_API UC_SaveGame : public USaveGame
 	GENERATED_BODY()
 
 public:
-
+	UPROPERTY()
 	int32 DayCount;
 };

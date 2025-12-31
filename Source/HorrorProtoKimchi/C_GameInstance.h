@@ -110,6 +110,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FName CurrentQuestName;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName SnapCurrentQuestName;
+
 	UFUNCTION(BlueprintCallable)
 	void SetCurrentLevelName();
 

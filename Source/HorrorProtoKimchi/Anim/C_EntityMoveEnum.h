@@ -27,6 +27,8 @@ enum class C_EntityMoveEnum : uint8
 	Talk2 UMETA(DisplayName = "Talk2"),
 	Talk3 UMETA(DisplayName = "Talk3"),
 	Yelling  UMETA(DisplayName = "Yelling"),
-	NinjaRun UMETA(DisplayName = "NinjaRun")
+	NinjaRun UMETA(DisplayName = "NinjaRun"),
+	MadSit UMETA(DisplayName = "MadSit"),
+	MadLie UMETA(DisplayName = "MadLie")
 
 };

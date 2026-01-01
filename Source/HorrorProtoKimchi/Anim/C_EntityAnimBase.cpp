@@ -73,6 +73,16 @@ void UC_EntityAnimBase::SetBodyMove(C_EntityMoveEnum pose)
 
 		Index = 16;
 		break;
+
+	case C_EntityMoveEnum::MadSit:
+
+		Index = 17;
+		break;
+
+	case C_EntityMoveEnum::MadLie:
+
+		Index = 18;
+		break;
 			
 
 	default :

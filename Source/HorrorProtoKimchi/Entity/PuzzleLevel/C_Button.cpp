@@ -15,3 +15,22 @@ void AC_Button::ActiveAllEvent()
 {
 	OnAction.Broadcast();
 }
+
+bool AC_Button::CalCulateCoolTime(float _DeltaTime)
+{
+	if (currentTime > coolTime) {
+		return true;
+	}
+	else {
+		currentTime += _DeltaTime;
+		if (currentTime > coolTime) {
+			return true;
+		}
+	}
+	return false;
+}
+
+void AC_Button::SetCoolTimeReset()
+{
+	currentTime = 0;
+}

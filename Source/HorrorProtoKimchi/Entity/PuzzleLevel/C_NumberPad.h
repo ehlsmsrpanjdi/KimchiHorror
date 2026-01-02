@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "C_NumberPad.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnNumberPadClear);
+
+
 UCLASS()
 class HORRORPROTOKIMCHI_API AC_NumberPad : public AActor
 {
@@ -16,6 +19,14 @@ public:
 	AC_NumberPad();
 
 public:
+	// 함수 포인터 역할
+	UPROPERTY(BlueprintAssignable)
+	FOnNumberPadClear OnAction;
+
+	UFUNCTION(BlueprintCallable)
+	void ActiveAllEvent();
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UArrowComponent* DirectionComponent;
 

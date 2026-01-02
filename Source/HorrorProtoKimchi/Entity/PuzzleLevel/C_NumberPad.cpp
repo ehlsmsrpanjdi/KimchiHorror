@@ -60,3 +60,7 @@ bool AC_NumberPad::CheckAnswer()
 	return true;
 }
 
+
+void AC_NumberPad::ActiveAllEvent() {
+	OnAction.Broadcast();
+}

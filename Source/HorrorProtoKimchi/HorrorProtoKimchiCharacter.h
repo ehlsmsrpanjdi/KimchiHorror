@@ -170,7 +170,7 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Noise")
 	void SetNoise(int32 Doubt);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)ㅔㅁ
 	bool IsHide = false;
 
 

@@ -30,4 +30,17 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ActiveAllEvent();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float coolTime = 3.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float currentTime = 0.0f;
+
+
+	UFUNCTION(BlueprintCallable)
+	bool CalCulateCoolTime(float _DeltaTime);
+
+	UFUNCTION(BlueprintCallable)
+	void SetCoolTimeReset();
 };

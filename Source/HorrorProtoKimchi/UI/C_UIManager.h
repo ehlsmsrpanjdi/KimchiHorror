@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 #pragma once
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
@@ -11,35 +11,38 @@ class HORRORPROTOKIMCHI_API UC_UIManager : public UGameInstanceSubsystem
     GENERATED_BODY()
 
 public:
-    // ¼­ºê½Ã½ºÅÛ ÃÊ±âÈ­
+    // ì„œë¸Œì‹œìŠ¤í…œ ì´ˆê¸°í™”
     virtual void Initialize(FSubsystemCollectionBase& Collection) override;
     virtual void Deinitialize() override;
 
-    // ºí·çÇÁ¸°Æ®¿¡¼­ UIManager ¾ò±â
+    // ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ UIManager ì–»ê¸°
     UFUNCTION(BlueprintCallable, BlueprintPure, Category = "UI", meta = (WorldContext = "WorldContextObject"))
     static UC_UIManager* GetUIManager(const UObject* WorldContextObject);
 
-    // UI Ãß°¡
+    // UI ì¶”ê°€
     UFUNCTION(BlueprintCallable, Category = "UI")
     void AddUI(TSubclassOf<UUserWidget> UIClass, UUserWidget* UIWidget);
 
-    // UI °¡Á®¿À±â
+    // UI ê°€ì ¸ì˜¤ê¸°
     UFUNCTION(BlueprintCallable, Category = "UI")
     UUserWidget* GetUI(TSubclassOf<UUserWidget> UIClass);
 
-    // UI ÄÑ±â
+    // UI ì¼œê¸°
     UFUNCTION(BlueprintCallable, Category = "UI")
     bool OnUI(TSubclassOf<UUserWidget> UIClass);
 
-    // UI ²ô±â
+    // UI ë„ê¸°
     UFUNCTION(BlueprintCallable, Category = "UI")
     bool OffUI(TSubclassOf<UUserWidget> UIClass);
 
-    // UI »ı¼º ¹× Ãß°¡ (ÆíÀÇ ÇÔ¼ö)
+    // UI ìƒì„± ë° ì¶”ê°€ (í¸ì˜ í•¨ìˆ˜)
     UFUNCTION(BlueprintCallable, Category = "UI", meta = (WorldContext = "WorldContextObject"))
     UUserWidget* CreateAndAddUI(const UObject* WorldContextObject, TSubclassOf<UUserWidget> UIClass);
 
     UClass* GetNativeClass(UClass* InClass);
+
+    UFUNCTION(BlueprintCallable)
+    void ClearDictionary();
 
 private:
     UPROPERTY()

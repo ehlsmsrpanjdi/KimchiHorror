@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 #include "UI/C_UIManager.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -53,7 +53,7 @@ UUserWidget* UC_UIManager::GetUI(TSubclassOf<UUserWidget> UIClass)
         return nullptr;
     }
 
-    // ÇÙ½É: ¿©±â¼­µµ GetNativeClass »ç¿ë!
+    // í•µì‹¬: ì—¬ê¸°ì„œë„ GetNativeClass ì‚¬ìš©!
     UClass* NativeClass = GetNativeClass(UIClass);
     if (!NativeClass)
     {
@@ -112,7 +112,7 @@ UUserWidget* UC_UIManager::CreateAndAddUI(const UObject* WorldContextObject, TSu
         return nullptr;
     }
 
-    // 1) À§Á¬ »ı¼º
+    // 1) ìœ„ì ¯ ìƒì„±
     UUserWidget* NewWidget =
         CreateWidget<UUserWidget>(WorldContextObject->GetWorld(), UIClass);
 
@@ -121,13 +121,13 @@ UUserWidget* UC_UIManager::CreateAndAddUI(const UObject* WorldContextObject, TSu
         return nullptr;
     }
 
-    // 2) Viewport¿¡ Ãß°¡
+    // 2) Viewportì— ì¶”ê°€
     NewWidget->AddToViewport();
 
-    // 3) Ã³À½ »ı¼º ½Ã ºñÈ°¼ºÈ­ (º¸ÀÌÁö ¾Ê°Ô)
+    // 3) ì²˜ìŒ ìƒì„± ì‹œ ë¹„í™œì„±í™” (ë³´ì´ì§€ ì•Šê²Œ)
     NewWidget->SetVisibility(ESlateVisibility::Hidden);
 
-    // 4) UIManager ³»ºÎ ¸®½ºÆ®¿¡ ÀúÀå
+    // 4) UIManager ë‚´ë¶€ ë¦¬ìŠ¤íŠ¸ì— ì €ì¥
     AddUI(UIClass, NewWidget);
 
     return NewWidget;
@@ -137,7 +137,7 @@ UClass* UC_UIManager::GetNativeClass(UClass* InClass)
 {
     if (!InClass) return nullptr;
 
-    // Blueprint Å¬·¡½ºÀÎ °æ¿ì C++ ºÎ¸ğ Å¬·¡½º Ã£±â
+    // Blueprint í´ë˜ìŠ¤ì¸ ê²½ìš° C++ ë¶€ëª¨ í´ë˜ìŠ¤ ì°¾ê¸°
     UClass* CurrentClass = InClass;
     while (CurrentClass && CurrentClass->ClassGeneratedBy != nullptr)
     {
@@ -145,4 +145,9 @@ UClass* UC_UIManager::GetNativeClass(UClass* InClass)
     }
 
     return CurrentClass;
+}
+
+void UC_UIManager::ClearDictionary()
+{
+    UIDictionary.Empty();
 }

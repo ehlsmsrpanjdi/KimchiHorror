@@ -28,4 +28,20 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsBlinking = false;
+
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OffLight();
+
+	/** C++ 기본 구현 */
+	virtual void OffLight_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnLight();
+
+	/** C++ 기본 구현 */
+	virtual void OnLight_Implementation();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool CanLight = true;
 };

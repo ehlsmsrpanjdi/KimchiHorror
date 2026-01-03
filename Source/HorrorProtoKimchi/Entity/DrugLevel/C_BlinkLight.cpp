@@ -30,3 +30,11 @@ float AC_BlinkLight::GetFlickerNoise(float MinIntensity, float MaxIntensity, flo
 	float Normalized = (Noise + 1.f) * 0.5f;
 	return FMath::Lerp(MinIntensity, MaxIntensity, Normalized);
 }
+
+void AC_BlinkLight::OffLight_Implementation()
+{
+}
+
+void AC_BlinkLight::OnLight_Implementation()
+{
+}

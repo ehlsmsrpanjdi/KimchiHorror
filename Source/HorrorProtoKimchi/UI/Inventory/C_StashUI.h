@@ -27,4 +27,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Stash")
 	void KHSortItems();
 
+	UFUNCTION(BlueprintCallable, Category = "Stash")
+	void KHEmptyItems();
 };

@@ -40,3 +40,8 @@ void UC_StashUI::KHSortItems()
 
 	KHItems = MoveTemp(NewItems);
 }
+
+void UC_StashUI::KHEmptyItems()
+{
+	KHItems.Empty();
+}

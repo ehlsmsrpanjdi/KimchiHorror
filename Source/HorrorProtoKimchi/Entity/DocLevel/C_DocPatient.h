@@ -9,6 +9,10 @@
 /**
  *
  */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPatientDead);
+
+
+
 UCLASS()
 class HORRORPROTOKIMCHI_API AC_DocPatient : public AC_EntityBase
 {
@@ -17,6 +21,12 @@ class HORRORPROTOKIMCHI_API AC_DocPatient : public AC_EntityBase
 public:
 
 	AC_DocPatient();
+
+	UPROPERTY(BlueprintAssignable)
+	FOnPatientDead OnAction;
+
+	UFUNCTION(BlueprintCallable)
+	void ActiveAllEvent();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UAudioComponent* SoundComponent;

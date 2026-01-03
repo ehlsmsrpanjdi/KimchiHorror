@@ -15,6 +15,11 @@ AC_DocPatient::AC_DocPatient()
 
 }
 
+void AC_DocPatient::ActiveAllEvent()
+{
+	OnAction.Broadcast();
+}
+
 bool AC_DocPatient::OnEvent(float _DeltaTime)
 {
 	CurrentTime += _DeltaTime;

@@ -32,6 +32,9 @@ void AC_SequenceLightManager::CalculateSequenceTime(float _DeltaTime)
 			currentIndex = 0;
 		}
 
+		if (SequenceLightArray[currentIndex] == nullptr) {
+			currentIndex = 0;
+		}
 		SequenceLightArray[currentIndex]->OnLight();
 	}
 

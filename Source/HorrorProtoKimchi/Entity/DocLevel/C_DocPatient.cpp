@@ -22,14 +22,14 @@ void AC_DocPatient::ActiveAllEvent()
 
 bool AC_DocPatient::OnEvent(float _DeltaTime)
 {
+	if (HaveToCure == true) {  // 이미 아프면 걍 넘어가기
+		return false;
+	}
+
 	CurrentTime += _DeltaTime;
 
 	if (CurrentTime > CoolTime) {
 		CurrentTime -= CoolTime;
-
-		if (HaveToCure == true) {  // 이미 아프면 걍 넘어가기
-			return false;
-		}
 
 		CurrentEventIndex = FMath::RandRange(0, 3);
 		HaveToCure = true;

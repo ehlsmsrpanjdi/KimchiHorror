@@ -20,24 +20,6 @@ void AC_DocPatient::ActiveAllEvent()
 	OnAction.Broadcast();
 }
 
-bool AC_DocPatient::OnEvent(float _DeltaTime)
-{
-	if (HaveToCure == true) {  // 이미 아프면 걍 넘어가기
-		return false;
-	}
-
-	CurrentTime += _DeltaTime;
-
-	if (CurrentTime > CoolTime) {
-		CurrentTime -= CoolTime;
-
-		CurrentEventIndex = FMath::RandRange(0, 3);
-		HaveToCure = true;
-		return true;
-	}
-	return false;
-}
-
 bool AC_DocPatient::OnCurePatient(int32 _AmpleIndex)
 {
 	if (HaveToCure == false) {  //치료 할 필요 없는데 치료하면 안됨
@@ -54,4 +36,22 @@ bool AC_DocPatient::OnCurePatient(int32 _AmpleIndex)
 	CurrentTime = 0;
 
 	return true;
+}
+
+bool AC_DocPatient::CalculateTime(float _DeltaTime) {
+	if (HaveToCure == true) {
+		return false;
+	}
+	if (isEnd == true) {
+		return false;
+	}
+
+	CurrentTime += _DeltaTime;
+	if (CurrentTime > CoolTime) {
+		CurrentEventIndex = FMath::RandRange(0, 3);
+		CurrentTime -= CoolTime;
+		HaveToCure = true;
+		return true;
+	}
+	return false;
 }

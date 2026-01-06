@@ -11,15 +11,16 @@ AC_DoctorDoorKnockObj::AC_DoctorDoorKnockObj()
 
 }
 
-// Called when the game starts or when spawned
-void AC_DoctorDoorKnockObj::BeginPlay()
-{
-	Super::BeginPlay();
-
-}
 
 bool AC_DoctorDoorKnockObj::CalculateCoolTime(float _DeltaTime)
 {
+	if (isEnd == true) {
+		return false;
+	}
+	if (isKnoking == true) {
+		return false;
+	}
+
 	CurrentCoolTime += _DeltaTime;
 	if (CurrentCoolTime > CoolTime) {
 		CurrentCoolTime -= CoolTime;

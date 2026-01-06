@@ -59,6 +59,9 @@ AHorrorProtoKimchiCharacter::AHorrorProtoKimchiCharacter()
 
 	soundComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("PlayerSoundComponent"));
 	soundComponent->SetupAttachment(RootComponent);
+
+	HandposComponent = CreateDefaultSubobject<UArrowComponent>(TEXT("HandPosArrow"));
+	HandposComponent->SetupAttachment(RootComponent);
 }
 
 void AHorrorProtoKimchiCharacter::BeginPlay()

@@ -304,6 +304,7 @@ float UC_KimchiHelper::GetSpeedRateByDistance(
 	return FMath::Lerp(MinSpeedRate, MaxSpeedRate, Alpha);
 }
 
+// Start ~ End ex) 0, 5  -> 0,1,2,3,4,5
 int32 UC_KimchiHelper::GetRandomInteger(int32 _start, int32 _end)
 {
 	return FMath::RandRange(_start, _end);

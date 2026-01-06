@@ -40,18 +40,31 @@ AC_DocEntitySpawner::AC_DocEntitySpawner()
 	IsSpawnArray.SetNum(SpawnPointArray.Num());
 }
 
-// Called when the game starts or when spawned
-void AC_DocEntitySpawner::BeginPlay()
-{
-	Super::BeginPlay();
+bool AC_DocEntitySpawner::CalculateTime(float _DeltaTime) {
+	if (isEnd == true) {
+		return false;
+	}
 
-}
+	if (EntityArray.Num() != 3) {
+		PhaseCurrentTime += _DeltaTime;
 
-// Called every frame
-void AC_DocEntitySpawner::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+		if (PhaseCurrentTime > PhaseCoolTime) {
+			PhaseCurrentTime -= PhaseCoolTime;
+			if (EntityArray.Num() == 1) {
+				EntityArray.Add(Phase_2Entity);
+			}
+			else if (EntityArray.Num() == 2) {
+				EntityArray.Add(Phase_3Entity);
+			}
+		}
+	}
 
+	currentTime += _DeltaTime;
+	if (currentTime > CoolTime) {
+		currentTime -= CoolTime;
+		return true;
+	}
+	return false;
 }
 
 TSubclassOf<ACharacter> AC_DocEntitySpawner::GetRandomCharacter()
@@ -150,5 +163,17 @@ void AC_DocEntitySpawner::SetupPointPos(float SpawnDistance)
 void AC_DocEntitySpawner::ResetSpawnPointBool(int _index)
 {
 	IsSpawnArray[_index] = false;
+}
+
+AActor* AC_DocEntitySpawner::SpawnEntity()
+{
+	UArrowComponent* Point = GetRandomPoint();
+
+
+	TSubclassOf<ACharacter> EntityClass = GetRandomCharacter();
+
+	AActor* SpawnedEntity = GetWorld()->SpawnActor(EntityClass, &Point->GetComponentTransform());
+
+	return SpawnedEntity;
 }
 

@@ -15,13 +15,8 @@ public:
 	// Sets default values for this actor's properties
 	AC_DocEntitySpawner();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
 	TSubclassOf<ACharacter> GetRandomCharacter();
@@ -37,6 +32,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 currentSelectedIndex;
+
+	UFUNCTION(BlueprintCallable)
+	AActor* SpawnEntity();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UArrowComponent* Point_1;
@@ -59,4 +57,30 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TSubclassOf<ACharacter>> EntityArray;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<ACharacter> Phase_2Entity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<ACharacter> Phase_3Entity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float PhaseCoolTime = 120.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float PhaseCurrentTime = 0.0f;
+
+	UFUNCTION(BlueprintCallable)
+	bool CalculateTime(float _DeltaTime);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float currentTime;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float CoolTime = 20;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void EndEvent();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isEnd = true;
 };

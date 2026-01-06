@@ -37,6 +37,9 @@ class AHorrorProtoKimchiCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UArrowComponent* TargetComponent;
 
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UArrowComponent* HandposComponent;
 protected:
 
 	/** Jump Input Action */

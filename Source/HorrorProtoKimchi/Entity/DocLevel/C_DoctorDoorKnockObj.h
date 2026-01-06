@@ -10,17 +10,20 @@ UCLASS()
 class HORRORPROTOKIMCHI_API AC_DoctorDoorKnockObj : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AC_DoctorDoorKnockObj();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
-public:	
-	
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isEnd = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isKnoking = false;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float CurrentCoolTime;
 
@@ -29,4 +32,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool CalculateCoolTime(float _DeltaTime);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void EndEvent();
 };

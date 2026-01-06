@@ -37,14 +37,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<class USoundBase*> PatientSoundArray;
 
-	UFUNCTION(BlueprintCallable)
-	bool OnEvent(float _DeltaTime);
 
 	UFUNCTION(BlueprintCallable)
 	bool OnCurePatient(int32 _AmpleIndex);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 CurrentEventIndex;
+
+	UFUNCTION(BlueprintCallable)
+	bool CalculateTime(float _DeltaTime);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float CurrentTime = 0;
@@ -54,5 +55,11 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool HaveToCure = false;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void EndEvent();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isEnd = true;
 
 };

@@ -23,6 +23,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Sequence")
 	FOnSequenceCallback OnSequenceFinished;
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void RunSequence();
+
 	// 3. 실행 함수
 	UFUNCTION(BlueprintCallable, Category = "Sequence")
 	void ExecuteCallback();

@@ -100,11 +100,4 @@ void AC_InterNurseHalusi::OffAll(bool bDormant)
 		SkelMesh->SetComponentTickEnabled(!bDormant);
 
 	}
-
-
-	// 5. Movement Component (있다면)
-	if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
-	{
-		MoveComp->SetComponentTickEnabled(!bDormant);
-	}
 }

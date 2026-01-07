@@ -56,7 +56,7 @@ public:
 	//shake
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float CoolTime = 2;
+	float CoolTime = 1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float CurrentTime = 0;

@@ -94,6 +94,10 @@ void AC_InterNurseHalusi::OffAll(bool bDormant)
 	// 3. 충돌 (필요 없으면 끔)
 	SetActorEnableCollision(!bDormant);
 
+	if (!bDormant == true) {
+		return;
+	}
+
 	for (USkeletalMeshComponent* SkelMesh : DormantIncludeMeshes) {
 
 		// 컴포넌트 Tick

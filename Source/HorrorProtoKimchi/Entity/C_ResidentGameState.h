@@ -60,4 +60,27 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetNextPhase(int32 _Current, int32 _Prev = -1);
+
+	UPROPERTY()
+	FTimerHandle PhaseActiveTimer;
+	UPROPERTY()
+	FTimerHandle PhaseSleepTimer;
+	UPROPERTY()
+	TArray<AC_InterNurseHalusi*> PendingActiveNurses;
+	UPROPERTY()
+	TArray<AC_InterNurseHalusi*> PendingSleepNurses;
+
+	UPROPERTY()
+	int32 ActiveIndex = 0;
+	UPROPERTY()
+	int32 SleepIndex = 0;
+
+	UPROPERTY()
+	float PhaseActivateDuration = 1.5f; // 1~2초 목표
+
+	void ProcessActiveOne();
+	void ProcessSleepOne();
+
+	UFUNCTION()
+	TArray<class AC_InterNurseHalusi*> GetPhaseArray(int32 Phase);
 };

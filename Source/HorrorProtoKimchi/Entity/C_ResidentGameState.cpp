@@ -101,37 +101,82 @@ void AC_ResidentGameState::SetRandomThreeSetTrue(int32 Phase)
 
 void AC_ResidentGameState::SetNextPhase(int32 _Current, int32 _Prev)
 {
-	TArray<AC_InterNurseHalusi*> SourceArray;
+	// 이전 Phase Sleep
+	PendingSleepNurses = GetPhaseArray(_Prev);
+	SleepIndex = 0;
 
-	switch (_Current)
+	if (PendingSleepNurses.Num() > 0)
 	{
-	case 1: SourceArray = Phase1Nurses; break;
-	case 2: SourceArray = Phase2Nurses; break;
-	case 3: SourceArray = Phase3Nurses; break;
-	default:
+		const float SleepInterval =
+			PhaseActivateDuration / PendingSleepNurses.Num();
+
+		GetWorldTimerManager().SetTimer(
+			PhaseSleepTimer,
+			this,
+			&AC_ResidentGameState::ProcessSleepOne,
+			FMath::Max(0.05f, SleepInterval),
+			true
+		);
+	}
+
+	// 현재 Phase Active
+	PendingActiveNurses = GetPhaseArray(_Current);
+	ActiveIndex = 0;
+
+	if (PendingActiveNurses.Num() > 0)
+	{
+		const float ActiveInterval =
+			PhaseActivateDuration / PendingActiveNurses.Num();
+
+		GetWorldTimerManager().SetTimer(
+			PhaseActiveTimer,
+			this,
+			&AC_ResidentGameState::ProcessActiveOne,
+			FMath::Max(0.05f, ActiveInterval),
+			true
+		);
+	}
+}
+
+void AC_ResidentGameState::ProcessActiveOne()
+{
+	if (ActiveIndex >= PendingActiveNurses.Num())
+	{
+		GetWorldTimerManager().ClearTimer(PhaseActiveTimer);
 		return;
 	}
 
-	for (int i = 0; i < SourceArray.Num(); ++i) {
-
-		SourceArray[i]->ActiveMode();
-
+	if (PendingActiveNurses[ActiveIndex])
+	{
+		PendingActiveNurses[ActiveIndex]->ActiveMode();
 	}
 
-	switch (_Prev)
+	ActiveIndex++;
+}
+
+void AC_ResidentGameState::ProcessSleepOne()
+{
+	if (SleepIndex >= PendingSleepNurses.Num())
 	{
-	case 1: SourceArray = Phase1Nurses; break;
-	case 2: SourceArray = Phase2Nurses; break;
-	case 3: SourceArray = Phase3Nurses; break;
-	default:
+		GetWorldTimerManager().ClearTimer(PhaseSleepTimer);
 		return;
 	}
 
-	if (_Prev != -1) {
-		for (int i = 0; i < SourceArray.Num(); ++i) {
+	if (PendingSleepNurses[SleepIndex])
+	{
+		PendingSleepNurses[SleepIndex]->SleepMode();
+	}
 
-			SourceArray[i]->SleepMode();
+	SleepIndex++;
+}
 
-		}
+TArray<AC_InterNurseHalusi*> AC_ResidentGameState::GetPhaseArray(int32 Phase)
+{
+	switch (Phase)
+	{
+	case 1: return Phase1Nurses;
+	case 2: return Phase2Nurses;
+	case 3: return Phase3Nurses;
+	default: return {};
 	}
 }

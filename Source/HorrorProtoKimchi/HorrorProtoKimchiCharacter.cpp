@@ -91,7 +91,7 @@ void AHorrorProtoKimchiCharacter::CheckInteraction()
 	}
 
 	FVector Start = FollowCamera->GetComponentLocation();
-	FVector End = Start + (FollowCamera->GetForwardVector() * 200);
+	FVector End = Start + (FollowCamera->GetForwardVector() * InteractionRange);
 	FHitResult Hit;
 
 	FCollisionQueryParams QueryParams;

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Doubt/C_DoubtsManager.h"
@@ -19,19 +19,7 @@ UC_DoubtsManager* UC_DoubtsManager::GetDoubtsManager(const UObject* WorldContext
 
 void UC_DoubtsManager::SetDoubt(int32 doubt)
 {
-	
 
-	for (AC_EntityBase* var : Entitys)
-	{
-		if (!IsValid(var))
-		{
-			continue;
-		}
-		if (var)
-		{
-			var->SetNoise(doubt);
-		}
-	}
 	UWorld* World = GetWorld();
 	if (!World) return;
 
@@ -40,13 +28,26 @@ void UC_DoubtsManager::SetDoubt(int32 doubt)
 
 	if (Player)
 	{
+		CurrentDoubt = doubt;
 		Player->SetNoise(doubt);
 	}
 }
 
-void UC_DoubtsManager::EmptyArrayfuckyou()
+
+
+void UC_DoubtsManager::AddDoubt(int32 doubt)
 {
-	Entitys.Empty();
+	UWorld* World = GetWorld();
+	if (!World) return;
+
+	AHorrorProtoKimchiCharacter* Player =
+		Cast<AHorrorProtoKimchiCharacter>(UGameplayStatics::GetPlayerCharacter(World, 0));
+
+	if (Player)
+	{
+		CurrentDoubt = CurrentDoubt + doubt;
+		Player->SetNoise(CurrentDoubt);
+	}
 }
-	
+
 

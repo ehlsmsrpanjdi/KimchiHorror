@@ -80,6 +80,7 @@ void AC_ResidentGameState::SetRandomThreeSetTrue(int32 Phase)
 	// 안전장치
 	if (SourceArray.Num() <= 3)
 	{
+		SourceArray[0]->bIsTrueNS = true;
 		return;
 	}
 

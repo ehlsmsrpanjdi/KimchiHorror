@@ -19,14 +19,13 @@ public:
 	FLinearColor GetColor();
 
 	UFUNCTION(BlueprintCallable)
-	void Correct();
+	bool Correct();
 
 	UFUNCTION(BlueprintCallable)
-	void InCorrect();
+	bool InCorrect();
 
 	UFUNCTION(BlueprintCallable)
-	void CheckIndex(int32 _Index);
-
+	bool CheckIndex(int32 _Index);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 LifeCount = 0;

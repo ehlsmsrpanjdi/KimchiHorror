@@ -27,28 +27,13 @@ void AC_EntityBase::BeginPlay()
 	Super::BeginPlay();
 	entityStateMachine = NewObject<UC_StateMachine>(this);
 	entityStateMachine->SetOwner(this);
-
-
 	StateInit();
-	GetWorld()->GetGameInstance()->GetSubsystem<UC_DoubtsManager>()->Entitys.Add(this);
 }
 
 void AC_EntityBase::Destroyed()
 {
 	Super::Destroyed();
 
-	if (UGameInstance* GI = GetWorld()->GetGameInstance())
-	{
-		if (UC_DoubtsManager* DoubtsMgr = GI->GetSubsystem<UC_DoubtsManager>())
-		{
-			TArray<AC_EntityBase*>& Arr = DoubtsMgr->Entitys;
-
-			if (Arr.Contains(this))
-			{
-				Arr.Remove(this);
-			}
-		}
-	}
 }
 
 // Called every frame

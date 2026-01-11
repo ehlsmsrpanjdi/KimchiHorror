@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -20,8 +20,10 @@ public :
 	static UC_DoubtsManager* GetDoubtsManager(const UObject* WorldContextObject);
 	UFUNCTION(BlueprintCallable)
 	void SetDoubt(int32 doubt);
+
+
 	UFUNCTION(BlueprintCallable)
-	void EmptyArrayfuckyou();
-	
-	TArray<AC_EntityBase*>Entitys;
+	void AddDoubt(int32 doubt);
+
+	int32 CurrentDoubt = 0;
 };

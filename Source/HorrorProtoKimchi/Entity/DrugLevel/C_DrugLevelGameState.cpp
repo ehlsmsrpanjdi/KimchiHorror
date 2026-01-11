@@ -18,19 +18,22 @@ FLinearColor AC_DrugLevelGameState::GetColor() {
 	}
 }
 
-void AC_DrugLevelGameState::Correct() {
+bool AC_DrugLevelGameState::Correct() {
 	LifeCount = 0;
+	return true;
 }
 
-void AC_DrugLevelGameState::InCorrect() {
+bool AC_DrugLevelGameState::InCorrect() {
 	++LifeCount;
+	return false;
 }
 
-void AC_DrugLevelGameState::CheckIndex(int32 _Index) {
+bool AC_DrugLevelGameState::CheckIndex(int32 _Index) {
 	if (LightIndex == _Index) {
 		++LightIndex;
 		Correct();
-		return;
+		return true;
 	}
 	InCorrect();
+	return false;
 }

@@ -24,7 +24,9 @@ void AC_InterNurseHalusi::InteractionEvent() {
 		if (bIsEnd == true) {
 			UC_GameInstance* Instance = Cast<UC_GameInstance>(GetGameInstance());
 			++Instance->DayCount;
-			SequenceHelper->RunSequence();
+			if (SequenceHelper != nullptr) {
+				SequenceHelper->RunSequence();
+			}
 		}
 		else {
 			Medicine->DestroyComponent();

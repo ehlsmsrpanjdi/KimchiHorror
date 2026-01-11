@@ -183,6 +183,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float PlayerPitch;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float InteractionRange = 200.f;
+
 public:  //sound
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UAudioComponent* soundComponent;

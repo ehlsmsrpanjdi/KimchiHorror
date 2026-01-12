@@ -42,6 +42,22 @@ FC_SoundDataTable UC_GameInstance::GetSoundData(FName _SoundData)
 	}
 }
 
+FC_FocusItemData UC_GameInstance::GetItemDiscriptionData(FName _ItemData)
+{
+	if (!ItemDiscriptionDataTable) {
+		return FC_FocusItemData();
+	}
+	FC_FocusItemData* ItemData = ItemDiscriptionDataTable->FindRow<FC_FocusItemData>(_ItemData, TEXT(""));
+
+	if (ItemData == nullptr) {
+		return FC_FocusItemData();
+	}
+	else {
+		return *ItemData;
+	}
+}
+
+
 void UC_GameInstance::SaveGame()
 {
 	UC_SaveGame* SaveGameData = Cast<UC_SaveGame>(

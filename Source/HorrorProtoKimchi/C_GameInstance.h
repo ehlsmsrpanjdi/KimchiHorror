@@ -8,6 +8,7 @@
 #include "Data/C_QuestDataTable.h"
 #include "Data/C_SoundDataTable.h"
 #include "Sound/SoundClass.h"
+#include "Data/C_FocusItemData.h"
 #include "C_GameInstance.generated.h"
 
 /**
@@ -29,11 +30,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DataTable")
 	UDataTable* QuestDataTable;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DataTable")
+	UDataTable* ItemDiscriptionDataTable;
+
 	UFUNCTION(BlueprintCallable)
 	FC_QuestDataTable GetQuestData(FName _QuestData);
 
 	UFUNCTION(BlueprintCallable)
 	FC_SoundDataTable GetSoundData(FName _SoundData);
+
+	UFUNCTION(BlueprintCallable)
+	FC_FocusItemData GetItemDiscriptionData(FName _ItemData);
 
 
 public:

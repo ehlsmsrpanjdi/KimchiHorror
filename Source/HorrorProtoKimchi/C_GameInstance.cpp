@@ -57,6 +57,21 @@ FC_FocusItemData UC_GameInstance::GetItemDiscriptionData(FName _ItemData)
 	}
 }
 
+FC_RoomSign UC_GameInstance::GetRoomSignData(FName _RoomSign)
+{
+	if (!RoomSignTable) {
+		return FC_RoomSign();
+	}
+	FC_RoomSign* ItemData = RoomSignTable->FindRow<FC_RoomSign>(_RoomSign, TEXT(""));
+
+	if (ItemData == nullptr) {
+		return FC_RoomSign();
+	}
+	else {
+		return *ItemData;
+	}
+}
+
 
 void UC_GameInstance::SaveGame()
 {

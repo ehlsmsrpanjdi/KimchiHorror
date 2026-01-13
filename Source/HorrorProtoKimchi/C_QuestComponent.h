@@ -23,6 +23,9 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void ExecuteQuest(FName _CurrentQuestLine);
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void ExecuteQuestNOUI(FName _CurrentQuestLine);
+
 	// C++에서 기본 구현 제공
 	virtual void ExecuteQuest_Implementation(FName _CurrentQuestLine);
 

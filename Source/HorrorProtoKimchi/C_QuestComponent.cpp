@@ -26,6 +26,10 @@ void UC_QuestComponent::ExecuteQuest_Implementation(FName _CurrentQuestLine)
 {
 }
 
+void UC_QuestComponent::ExecuteQuestNOUI_Implementation(FName _CurrentQuestLine)
+{
+}
+
 void UC_QuestComponent::SetNextQuestLine(FName _NextQuestLine)
 {
 	CurrentQuestLine = _NextQuestLine;

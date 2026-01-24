@@ -20,10 +20,18 @@ FLinearColor AC_DrugLevelGameState::GetColor() {
 
 bool AC_DrugLevelGameState::Correct() {
 	LifeCount = 0;
+	bPrevCorrect = true;
 	return true;
 }
 
 bool AC_DrugLevelGameState::InCorrect() {
+	++LifeCount;
+	bPrevCorrect = false;
+	return false;
+}
+
+bool AC_DrugLevelGameState::MoveAgain()
+{
 	++LifeCount;
 	return false;
 }

@@ -25,6 +25,9 @@ public:
 	bool InCorrect();
 
 	UFUNCTION(BlueprintCallable)
+	bool MoveAgain();
+
+	UFUNCTION(BlueprintCallable)
 	bool CheckIndex(int32 _Index);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -42,4 +45,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Color")
 	FLinearColor WhiteColor = FLinearColor(1.f, 1.f, 1.f, 1.f);
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bPrevCorrect = false;
 };

@@ -7,14 +7,6 @@
 #include "Components/ArrowComponent.h"
 #include "Components/SceneComponent.h"
 
-AC_HideChild::AC_HideChild()
-{
-	RootComponent = CreateDefaultSubobject<USceneComponent>("Root");
-	SetRootComponent(RootComponent);
-}
-
-
-
 bool AC_HideChild::MoveFunction()
 {
 	CheckFindPlayer();

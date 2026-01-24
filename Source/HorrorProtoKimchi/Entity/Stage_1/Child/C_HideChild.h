@@ -16,8 +16,6 @@ class HORRORPROTOKIMCHI_API AC_HideChild : public AC_HospitalChild
 
 public:
 
-	AC_HideChild();
-
 	UFUNCTION(BlueprintCallable)
 	bool MoveFunction();
 

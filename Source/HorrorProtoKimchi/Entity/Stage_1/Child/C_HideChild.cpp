@@ -9,17 +9,17 @@
 
 bool AC_HideChild::MoveFunction()
 {
-	CheckFindPlayer();
-
 	if (FindPlayer == false) {
 		if (Player->IsHide == false) {
 			return UC_KimchiHelper::MoveToLocationAndCheckArrival(this, Player->GetActorLocation(), 50.f);
+		}
+		if (Player->IsHide == true) {
+			return UC_KimchiHelper::MoveToLocationAndCheckArrival(this, locationComponent->GetComponentLocation(), 50.f);
 		}
 
 		if (locationComponent == nullptr) {
 			return false;
 		}
-		UC_KimchiHelper::MoveToLocationAndCheckArrival(this, locationComponent->GetComponentLocation(), 50.f);
 		return false;
 	}
 	else {
@@ -27,17 +27,17 @@ bool AC_HideChild::MoveFunction()
 	}
 }
 
-void AC_HideChild::CheckFindPlayer()
-{
-	FHitResult result = UC_KimchiHelper::LineTraceActorToActor(this, Player, false);
-
-	if (result.GetActor() == nullptr) {
-		return;
-	}
-	if (Player == result.GetActor()) {
-		FindPlayer = true;
-	}
-}
+//void AC_HideChild::CheckFindPlayer()
+//{
+//	FHitResult result = UC_KimchiHelper::LineTraceActorToActor(this, Player, false);
+//
+//	if (result.GetActor() == nullptr) {
+//		return;
+//	}
+//	if (Player == result.GetActor()) {
+//		FindPlayer = true;
+//	}
+//}
 
 bool AC_HideChild::CheckCoolTime(float _Deltatime)
 {

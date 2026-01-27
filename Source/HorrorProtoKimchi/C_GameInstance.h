@@ -10,6 +10,7 @@
 #include "Sound/SoundClass.h"
 #include "Data/C_FocusItemData.h"
 #include "Data/C_RoomSign.h"
+#include "Data/C_DiaryDataTable.h"
 #include "C_GameInstance.generated.h"
 
 /**
@@ -37,6 +38,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DataTable")
 	UDataTable* RoomSignTable;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DataTable")
+	UDataTable* DiaryTable;
+
 	UFUNCTION(BlueprintCallable)
 	FC_QuestDataTable GetQuestData(FName _QuestData);
 
@@ -48,6 +52,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	FC_RoomSign GetRoomSignData(FName _RoomSign);
+
+	UFUNCTION(BlueprintCallable)
+	FC_DiaryDataTable GetDiaryData(FName _Data);
 
 
 public:

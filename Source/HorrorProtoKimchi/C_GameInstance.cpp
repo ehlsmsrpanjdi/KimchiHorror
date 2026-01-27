@@ -72,6 +72,21 @@ FC_RoomSign UC_GameInstance::GetRoomSignData(FName _RoomSign)
 	}
 }
 
+FC_DiaryDataTable UC_GameInstance::GetDiaryData(FName _Data)
+{
+	if (!DiaryTable) {
+		return FC_DiaryDataTable();
+	}
+	FC_DiaryDataTable* ItemData = DiaryTable->FindRow<FC_DiaryDataTable>(_Data, TEXT(""));
+
+	if (ItemData == nullptr) {
+		return FC_DiaryDataTable();
+	}
+	else {
+		return *ItemData;
+	}
+}
+
 
 void UC_GameInstance::SaveGame()
 {
